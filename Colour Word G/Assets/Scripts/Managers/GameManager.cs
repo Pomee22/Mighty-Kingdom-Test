@@ -6,6 +6,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public enum GameState
+    {
+        START,
+        GAME,
+        END
+    }
+
+    private GameState curretState;
+
     private void Awake()
     {
         if (Instance)
@@ -20,9 +29,22 @@ public class GameManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateGameStart(GameState state)
     {
-        
+        // Change the current game state with a new state
+        curretState = state;
+
+        // Run any events on game state change
+        switch(curretState)
+        {
+            case GameState.START:
+                break;
+            case GameState.GAME:
+                UIManager.Instance.timer.StartCountdown();
+                // Start game loop
+                break;
+            case GameState.END:
+                break;
+        }
     }
 }
