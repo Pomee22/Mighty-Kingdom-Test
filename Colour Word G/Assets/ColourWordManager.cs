@@ -12,8 +12,10 @@ public class ColourWordManager : MonoBehaviour
     private int randWordIndex;
     private int randColourIndex;
 
-    private string currentWord;
-    private Color currentColour;
+    //private string currentWord;
+    //private Color currentColour;
+
+    private GameManager.Colours currentColour;
 
     void Awake()
     {
@@ -23,22 +25,16 @@ public class ColourWordManager : MonoBehaviour
         Instance = this;
     } 
 
-    public void CycleToNext()
-    {
-
-    }
-
     public void Randomise()
     {
         int wordIndex = Random.Range(0, words.Length);
         int colourIndex = Random.Range(0, colours.Length);
 
-        currentWord = words[wordIndex];
-        currentColour = colours[colourIndex];
+        currentColour = (GameManager.Colours)colourIndex;
 
         // Update the colour word text
-        UIManager.Instance.colourWord.text = currentWord;
-        UIManager.Instance.colourWord.color = currentColour;
+        UIManager.Instance.colourWord.text = words[wordIndex];
+        UIManager.Instance.colourWord.color = colours[colourIndex];
     }
 
     public int RandomIntExcept(int min, int max, int except)
@@ -50,6 +46,13 @@ public class ColourWordManager : MonoBehaviour
 
     public void CompareColours(GameManager.Colours colour)
     {
-        //if(colour == )
+        if(colour == currentColour)
+        {
+            Debug.Log("Bingo");
+        }
+        else
+        {
+            Debug.Log("Nope");
+        }
     }
 }

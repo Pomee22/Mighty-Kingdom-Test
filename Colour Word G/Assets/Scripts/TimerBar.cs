@@ -38,8 +38,6 @@ public class TimerBar : MonoBehaviour
         // Decrease the time if we still have time left
         while (timer > 0.0f /*&& isCountingDown*/)
         {
-            Debug.Log("Counting down " + timer);
-
             timer -= Time.deltaTime;
 
             // Display time in seconds

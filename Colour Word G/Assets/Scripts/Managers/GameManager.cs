@@ -71,6 +71,6 @@ public class GameManager : MonoBehaviour
     // any one of the given colour options
     public void ColourSelected(ColourOption colourOption)
     {
-        Debug.Log(colourOption.colour + " selected");
+        ColourWordManager.Instance.CompareColours(colourOption.colour);
     }
 }
