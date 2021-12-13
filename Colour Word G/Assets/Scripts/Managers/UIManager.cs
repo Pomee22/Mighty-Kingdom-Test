@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     public TimerBar timer;
     public TextMeshProUGUI timerText;
 
+    public TextMeshProUGUI colourWord;
+
     private void Awake()
     {
         if (Instance)
@@ -35,7 +37,7 @@ public class UIManager : MonoBehaviour
         gameContent.SetActive(true);
 
         // Then proceed to the game state
-        GameManager.Instance.UpdateGameStart(GameManager.GameState.GAME);
+        GameManager.Instance.UpdateGameState(GameManager.GameState.GAME);
     }
 
     private async Task Transition()
@@ -56,5 +58,10 @@ public class UIManager : MonoBehaviour
     public void UpdateEndContent(bool status)
     {
 
+    }
+
+    public void UpdateColourWord(int wordIndex, int colourIndex)
+    {
+        
     }
 }

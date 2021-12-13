@@ -6,6 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public ColourWordManager colourWordManager;
+
+    [Tooltip("The number of rounds the game consists of.")]
+    public int rounds = 5;
     public float roundDuration = 5.0f;
 
     public enum GameState
@@ -13,7 +17,15 @@ public class GameManager : MonoBehaviour
         START,
         GAME,
         END
-    }
+    };
+
+    public enum Colours
+    {
+        RED,
+        YELLOW,
+        BLUE,
+        GREEN
+    };
 
     private GameState curretState;
 
@@ -28,10 +40,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateGameState(GameState.START);
     }
 
-    public void UpdateGameStart(GameState state)
+    public void UpdateGameState(GameState state)
     {
         // Change the current game state with a new state
         curretState = state;
@@ -40,7 +52,11 @@ public class GameManager : MonoBehaviour
         switch(curretState)
         {
             case GameState.START:
-                break;
+                {
+                    colourWordManager.Randomise();
+
+                    break;
+                }
             case GameState.GAME:
                 UIManager.Instance.timer.StartCountdown(roundDuration);
                 // Start game loop
@@ -48,5 +64,13 @@ public class GameManager : MonoBehaviour
             case GameState.END:
                 break;
         }
+    }
+
+    // Called by Unity onclick event.
+    // Gets invoked when player selects
+    // any one of the given colour options
+    public void ColourSelected(ColourOption colourOption)
+    {
+        Debug.Log(colourOption.colour + " selected");
     }
 }
