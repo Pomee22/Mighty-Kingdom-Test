@@ -23,6 +23,11 @@ public class Timer : MonoBehaviour
         isCountingDown = false;
     }
 
+    public void ResetCountdown()
+    {
+        currentTime = 0.0f;
+    }
+
     private async Task CountDownActive()
     {
         while(isCountingDown)
