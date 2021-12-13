@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class TimerBar : MonoBehaviour
 
     private float minTime, midTime;
 
+
     public async void StartCountdown(float duration)
     {
         // Begin countdown timer
@@ -24,7 +26,9 @@ public class TimerBar : MonoBehaviour
         minTime = timer / 3; // 1/3 of duration
         midTime = (timer * 2) / 3; // 2/3 of duration
 
-        await CountdownAsync();
+        //await CountdownAsync();
+        StopAllCoroutines();
+        StartCoroutine(CountdownActive());
     }
 
     public void StopCountdown()
@@ -38,23 +42,44 @@ public class TimerBar : MonoBehaviour
         // Decrease the time if we still have time left
         while (timer > 0.0f /*&& isCountingDown*/)
         {
+            if (!isCountingDown)
+                break;
+
             timer -= Time.deltaTime;
 
             // Display time in seconds
             int time = (int)timer;
             UIManager.Instance.timerText.text = time.ToString();
 
-            isCountingDown = false;
-
             // Update the fillamount, so the bar decreases overtime
             timeBar.fillAmount = timer / duration;
-
-            if (isCountingDown)
-                break;
 
             UpdateColour(timer);
 
             await Task.Yield();
+        }
+    }
+
+    private IEnumerator CountdownActive()
+    {
+        // Decrease the time if we still have time left
+        while (timer > 0.0f /*&& isCountingDown*/)
+        {
+            if (!isCountingDown)
+                break;
+
+            timer -= Time.deltaTime;
+
+            // Display time in seconds
+            int time = (int)timer;
+            UIManager.Instance.timerText.text = time.ToString();
+
+            // Update the fillamount, so the bar decreases overtime
+            timeBar.fillAmount = timer / duration;
+
+            UpdateColour(timer);
+
+            yield return null;
         }
     }
 

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("The number of rounds the game consists of.")]
     public int rounds = 5;
     public float roundDuration = 5.0f;
+    private int currentRound = 0;
+
+    private int score = 0;
 
     public enum GameState
     {
@@ -53,15 +56,15 @@ public class GameManager : MonoBehaviour
         {
             case GameState.START:
                 {
-                    colourWordManager.Randomise();
-
                     break;
                 }
             case GameState.GAME:
                 UIManager.Instance.timer.StartCountdown(roundDuration);
+                colourWordManager.Randomise();
                 // Start game loop
                 break;
             case GameState.END:
+                Debug.Log("GAME END");
                 break;
         }
     }
@@ -71,6 +74,15 @@ public class GameManager : MonoBehaviour
     // any one of the given colour options
     public void ColourSelected(ColourOption colourOption)
     {
-        ColourWordManager.Instance.CompareColours(colourOption.colour);
+        if (ColourWordManager.Instance.CompareColours(colourOption.colour))
+            score++;
+
+        currentRound++;
+
+        // If this was the last round...
+        if (currentRound == rounds)
+            UpdateGameState(GameState.END);
+        else
+            UpdateGameState(GameState.GAME);
     }
 }

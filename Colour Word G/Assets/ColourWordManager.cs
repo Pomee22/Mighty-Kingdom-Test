@@ -44,15 +44,17 @@ public class ColourWordManager : MonoBehaviour
         return result;
     }
 
-    public void CompareColours(GameManager.Colours colour)
+    public bool CompareColours(GameManager.Colours colour)
     {
         if(colour == currentColour)
         {
             Debug.Log("Bingo");
+            return true;
         }
         else
         {
             Debug.Log("Nope");
+            return false;
         }
     }
 }

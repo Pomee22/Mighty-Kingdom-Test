@@ -341,6 +341,7 @@ MonoBehaviour:
   gameContent: {fileID: 1039895339}
   timer: {fileID: 766631014}
   timerText: {fileID: 1684511829}
+  colourWord: {fileID: 571558918}
 --- !u!1 &367107273
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +354,7 @@ GameObject:
   - component: {fileID: 367107277}
   - component: {fileID: 367107276}
   - component: {fileID: 367107275}
+  - component: {fileID: 367107278}
   m_Layer: 5
   m_Name: Blue Button
   m_TagString: Untagged
@@ -424,13 +426,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 519818736}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ColourSelected
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgument: {fileID: 367107278}
+          m_ObjectArgumentAssemblyTypeName: ColourOption, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -474,6 +476,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367107273}
   m_CullTransparentMesh: 1
+--- !u!114 &367107278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367107273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee96162a9fde4a458ae2906b2055770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: 2
+--- !u!1 &418216066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 418216067}
+  - component: {fileID: 418216068}
+  m_Layer: 0
+  m_Name: ColourWordManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &418216067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418216066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1649703381}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &418216068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418216066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad48a87d7ae4bb84e810b6587107baef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  words:
+  - Red
+  - Green
+  - Yellow
+  - Blue
+  colours:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.9723209, b: 0, a: 1}
+  - {r: 0, g: 0.22933388, b: 1, a: 1}
+  - {r: 0.17307985, g: 1, b: 0, a: 1}
 --- !u!1 &439598280
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d327e36155e0d724aa78991e23990bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colourWordManager: {fileID: 418216068}
+  rounds: 5
   roundDuration: 5
 --- !u!1 &550741238
 GameObject:
@@ -623,6 +693,7 @@ GameObject:
   - component: {fileID: 550741242}
   - component: {fileID: 550741241}
   - component: {fileID: 550741240}
+  - component: {fileID: 550741243}
   m_Layer: 5
   m_Name: Yellow Button
   m_TagString: Untagged
@@ -693,7 +764,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 550741241}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519818736}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ColourSelected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 550741243}
+          m_ObjectArgumentAssemblyTypeName: ColourOption, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &550741241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,6 +815,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550741238}
   m_CullTransparentMesh: 1
+--- !u!114 &550741243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550741238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee96162a9fde4a458ae2906b2055770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: 1
 --- !u!1 &571558916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,7 +1229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1039895340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1382,6 +1478,7 @@ GameObject:
   - component: {fileID: 1207971611}
   - component: {fileID: 1207971610}
   - component: {fileID: 1207971609}
+  - component: {fileID: 1207971612}
   m_Layer: 5
   m_Name: Red Button
   m_TagString: Untagged
@@ -1452,7 +1549,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1207971610}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519818736}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ColourSelected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1207971612}
+          m_ObjectArgumentAssemblyTypeName: ColourOption, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1207971610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1491,6 +1600,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207971607}
   m_CullTransparentMesh: 1
+--- !u!114 &1207971612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207971607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee96162a9fde4a458ae2906b2055770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: 0
 --- !u!1 &1221281387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,6 +1809,7 @@ GameObject:
   - component: {fileID: 1358112873}
   - component: {fileID: 1358112872}
   - component: {fileID: 1358112871}
+  - component: {fileID: 1358112874}
   m_Layer: 5
   m_Name: Green Button
   m_TagString: Untagged
@@ -1757,7 +1880,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1358112872}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519818736}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ColourSelected
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1358112874}
+          m_ObjectArgumentAssemblyTypeName: ColourOption, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1358112872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1796,6 +1931,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358112869}
   m_CullTransparentMesh: 1
+--- !u!114 &1358112874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358112869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee96162a9fde4a458ae2906b2055770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: 3
 --- !u!1 &1649703380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,6 +1973,7 @@ Transform:
   m_Children:
   - {fileID: 519818735}
   - {fileID: 277693401}
+  - {fileID: 418216067}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
