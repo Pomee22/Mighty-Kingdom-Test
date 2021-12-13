@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public float roundDuration = 5.0f;
+
     public enum GameState
     {
         START,
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
             case GameState.START:
                 break;
             case GameState.GAME:
-                UIManager.Instance.timer.StartCountdown();
+                UIManager.Instance.timer.StartCountdown(roundDuration);
                 // Start game loop
                 break;
             case GameState.END:

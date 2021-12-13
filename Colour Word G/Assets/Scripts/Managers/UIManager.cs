@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject startContent;
     public GameObject gameContent;
 
-    public Timer timer;
+    public TimerBar timer;
     public TextMeshProUGUI timerText;
 
     private void Awake()
