@@ -10,11 +10,12 @@ public class UIManager : MonoBehaviour
 
     public GameObject startContent;
     public GameObject gameContent;
+    public GameObject endContent;
 
-    public TimerBar timer;
     public TextMeshProUGUI timerText;
 
     public TextMeshProUGUI colourWord;
+    public TextMeshProUGUI scoreText;
 
     private void Awake()
     {
@@ -63,5 +64,13 @@ public class UIManager : MonoBehaviour
     public void UpdateColourWord(int wordIndex, int colourIndex)
     {
         
+    }
+
+    public void DisplayEndGame(int score)
+    {
+        scoreText.text = score.ToString();
+
+        endContent.SetActive(true);
+        gameContent.SetActive(false);
     }
 }

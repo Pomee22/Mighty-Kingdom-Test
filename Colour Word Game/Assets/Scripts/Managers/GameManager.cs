@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public ColourWordManager colourWordManager;
+    public TimerBar timerBar;
 
     [Tooltip("The number of rounds the game consists of.")]
     public int rounds = 5;
@@ -59,11 +60,12 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             case GameState.GAME:
-                UIManager.Instance.timer.StartCountdown(roundDuration);
+                timerBar.StartCountdown(roundDuration);
                 colourWordManager.Randomise();
                 // Start game loop
                 break;
             case GameState.END:
+                UIManager.Instance.DisplayEndGame(score);
                 Debug.Log("GAME END");
                 break;
         }
