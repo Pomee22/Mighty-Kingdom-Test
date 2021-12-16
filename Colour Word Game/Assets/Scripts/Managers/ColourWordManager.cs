@@ -10,7 +10,7 @@ public class ColourWordManager : MonoBehaviour
 {
     public static ColourWordManager Instance;
 
-    public List<ColourType> colourTypes;
+    [SerializeField] private List<ColourType> colourTypes;
 
     private int colourIndex;    // Used to randomly pick a colour
     private int wordIndex;  // Used to randomly pick a word
