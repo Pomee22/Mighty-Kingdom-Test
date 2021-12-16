@@ -91,6 +91,11 @@ public class GameManager : MonoBehaviour
             score++;
         }
 
+        NextRound();
+    }
+
+    public void NextRound()
+    {
         currentRound++;
 
         // If this was the last round...

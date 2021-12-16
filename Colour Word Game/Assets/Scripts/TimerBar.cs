@@ -13,7 +13,6 @@ public class TimerBar : MonoBehaviour
 
     private float minTime, midTime;
 
-
     public async void StartCountdown(float duration)
     {
         // Begin countdown timer
@@ -86,6 +85,9 @@ public class TimerBar : MonoBehaviour
 
             yield return null;
         }
+
+        // Proceed to the next round if player doesn't select anything
+        GameManager.Instance.NextRound();
     }
 
     private void UpdateColour(float time)
