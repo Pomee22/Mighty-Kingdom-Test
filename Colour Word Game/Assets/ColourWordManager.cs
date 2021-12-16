@@ -2,33 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages the color words by 
+/// randomly selecting a colour and word 
+/// </summary>
 public class ColourWordManager : MonoBehaviour
 {
     public static ColourWordManager Instance;
 
-    [SerializeField] private List<string> words;
-    [SerializeField] private List<Color> colours;
-
-    public List<int> colourIds;
-
     public List<ColourType> colourTypes;
 
-    private int randWordIndex;
-    private int randColourIndex;
+    private int colourIndex;    // Used to randomly pick a colour
+    private int wordIndex;  // Used to randomly pick a word
 
-    //private string currentWord;
-    //private Color currentColour;
-
-    private GameManager.Colours currentColour;
-
-    private int prevWordIndex;
-    private int prevColourIndex;
-    int colourIndex;
-    int wordIndex;
-
-    ColourType colour;
-    ColourType word;
-
+    private ColourType currentColour;   // Used to keep track of the current/previous colour
+    private ColourType currentWord; // Used to keep track of the current/previous word 
 
     void Awake()
     {
@@ -38,144 +26,84 @@ public class ColourWordManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        // Assign each colour id a number for each colour in the Colours enum
-        for(int i = 0; i < System.Enum.GetValues(typeof(GameManager.Colours)).Length; i++)
-        {
-            colourIds.Add(i);
-        }
-    }
-
     public void Initialise()
     {
         colourIndex = Random.Range(0, colourTypes.Count);
-        colour = colourTypes[colourIndex];
+        currentColour = colourTypes[colourIndex];
 
         wordIndex = Random.Range(0, colourTypes.Count);
-        word = colourTypes[wordIndex];
+        currentWord = colourTypes[wordIndex];
 
         // Update the colour word text
         UIManager.Instance.colourWord.text = colourTypes[wordIndex].colourName;
         UIManager.Instance.colourWord.color = colourTypes[colourIndex].colour;
     }
 
+    /// <summary>
+    /// Invoked by the GameManager. 
+    /// The function selects a new random colour word
+    /// </summary>
     public void SelectNewColourWord()
     {        
-        //wordIndex = Random.Range(0, words.Count);
-        //colourIndex = Random.Range(0, colourTypes.Count);
-
         // Ensures a differnt colour word is selcted
         Randomise();
 
-        if (wordIndex == prevWordIndex)
-        {
-            //wordIndex = GenerateNewColourWord(wordIndex);
-        }
-        Debug.Log("wordINdex: " + wordIndex);
-
-        if(colourIndex == prevColourIndex)
-
-        // Keep track of current word and colour used
-        prevWordIndex = wordIndex;
-        prevColourIndex = colourIndex;
-        currentColour = (GameManager.Colours)colourIndex;
-
-        //// Update the colour word text
-        //UIManager.Instance.colourWord.text = colourTypes[wordIndex].colourName;
-        //UIManager.Instance.colourWord.color = colourTypes[colourIndex].colour;
+        UIManager.Instance.colourWord.color = currentColour.colour;
+        UIManager.Instance.colourWord.text = currentWord.colourName;
     }
 
     private void Randomise()
     {
-        // Add the removed text back
-        //words.Add(text);
+        // Record the previously used colour and word
+        ColourType previousWord = currentWord;
+        ColourType previousColour = currentColour;
 
-        ColourType lastTextToExemptOk = word;
-        ColourType colourToExempt = colour;
+        // Remove the used colour from the list
+        colourTypes.Remove(previousColour);
 
-        // Remove the previuslly used colour index
-        colourTypes.Remove(colourToExempt);
-
+        // Randomise a new colour with other colours that haven't been used 
         colourIndex = Random.Range(0, colourTypes.Count);
-        colour = colourTypes[colourIndex];
-
-        // Update the colour word text
-        UIManager.Instance.colourWord.color = colour.colour;
-
-        //ColourType colourWordToExempt = colour;
+        currentColour = colourTypes[colourIndex];
 
         // Add the removed colour back
-        colourTypes.Add(colourToExempt);
+        colourTypes.Add(previousColour);
 
-        // + previous word
-        //ColourType wordToExempt1 = colourTypes[wordIndex];
-
-        if (colour == lastTextToExemptOk)
+        // Check if the new selected colour was the same as the previous word
+        if (currentColour == previousWord)
         {
-            // Just remove one
-            colourTypes.Remove(colour);
+            // Just remove the colour from the list
+            colourTypes.Remove(currentColour);
+
+            wordIndex = Random.Range(0, colourTypes.Count);
+            currentWord = colourTypes[wordIndex];
+
+            // Add the colour back to the list
+            colourTypes.Add(currentColour);
         }
         else
         {
+            // Just remove the colour and previous word from the list
+            colourTypes.Remove(currentColour);
+            colourTypes.Remove(previousWord);
 
-            // Remove the previuslly used colour index
-            colourTypes.Remove(colour);
-            colourTypes.Remove(lastTextToExemptOk);
-            
-        }
+            wordIndex = Random.Range(0, colourTypes.Count);
+            currentWord = colourTypes[wordIndex];
 
-        wordIndex = Random.Range(0, colourTypes.Count);
-        word = colourTypes[wordIndex];
-
-        UIManager.Instance.colourWord.text = word.colourName;
-
-        if (colour == lastTextToExemptOk)
-        {
-            // Just add one
-            colourTypes.Add(colour);
-        }
-        else
-        {
-
-            // Remove the previuslly used colour index
-            colourTypes.Add(colour);
-            colourTypes.Add(lastTextToExemptOk);
-
+            // Add the colour and previous word back to the list
+            colourTypes.Add(currentColour);
+            colourTypes.Add(previousWord);
         }
     }
 
-    private int GenerateNewColourWord(int index)
-    {
-        List<string> tempWords = new List<string>();
-        for(int i = 0; i <words.Count; i++)
-        {
-            if(i != index)
-                tempWords.Add(words[i]);
-        }
-
-        // TO-do
-        // The colour must be different from the word
-        // itself
-
-
-        index = Random.Range(0, tempWords.Count);
-
-
-        // Returmn string instead?
-        return index;
-    }
-
-    public int RandomIntExcept(int min, int max, int except)
-    {
-        int result = Random.Range(min, max - 1);
-        if (result >= except) result += 1;
-        return result;
-    }
-
+    /// <summary>
+    /// Invoked by the GameManager when the player selects a button.
+    /// The funcion checks if the colour is the correct answer
+    /// </summary>
+    /// <param name="colour"></param>
+    /// <returns></returns>
     public bool CompareColours(ColourOption colour)
     {
-        if(colour.colour == this.colour.colourId)    
+        if(colour.colour == this.currentColour.colourId)    
         {
             Debug.Log("Bingo");
             return true;
