@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             case GameState.GAME:
-                timerBar.StartCountdown(roundDuration);
+                //timerBar.StartCountdown(roundDuration);
                 colourWordManager.Initialise();
                 colourWordManager.SelectNewColourWord();
                 // Start game loop
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
             UpdateGameState(GameState.END);
         else
         {
-            timerBar.StartCountdown(roundDuration);
+            timerBar.Reset();
             colourWordManager.SelectNewColourWord();
         }
     }

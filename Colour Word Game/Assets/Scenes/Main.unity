@@ -536,17 +536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad48a87d7ae4bb84e810b6587107baef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  words:
-  - Red
-  - Green
-  - Yellow
-  - Blue
-  colours:
-  - {r: 0, g: 0.13080311, b: 1, a: 1}
-  - {r: 1, g: 0.9723209, b: 0, a: 1}
-  - {r: 1, g: 0.011301808, b: 0, a: 1}
-  - {r: 0.17307985, g: 1, b: 0, a: 1}
-  colourIds: 
   colourTypes:
   - {fileID: 11400000, guid: 9b112b6daddc66c479356372747207fb, type: 2}
   - {fileID: 11400000, guid: bc105e7831874964d8eb5601e66b3463, type: 2}
@@ -655,6 +644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 519818735}
   - component: {fileID: 519818736}
+  - component: {fileID: 519818737}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -692,6 +682,18 @@ MonoBehaviour:
   timerBar: {fileID: 766631014}
   rounds: 10
   roundDuration: 5
+--- !u!114 &519818737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519818734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e97a4a69b6970e40916f65f0b45a618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &550741238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 766631013}
   - component: {fileID: 766631014}
+  - component: {fileID: 766631015}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -1161,6 +1164,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBar: {fileID: 1927523849}
+  timerT: {fileID: 766631015}
+--- !u!114 &766631015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766631012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e97a4a69b6970e40916f65f0b45a618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &770060922
 GameObject:
   m_ObjectHideFlags: 0

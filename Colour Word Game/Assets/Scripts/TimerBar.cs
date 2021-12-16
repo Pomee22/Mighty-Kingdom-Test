@@ -7,28 +7,56 @@ public class TimerBar : MonoBehaviour
 {
     [SerializeField] private Image timeBar;
 
+    [SerializeField] private Timer timerT;
+
     private float timer = 0.0f;
     private float duration;
     private bool isCountingDown;
 
     private float minTime, midTime;
 
-    public async void StartCountdown(float duration)
+    private void Start()
     {
-        // Begin countdown timer
-        isCountingDown = true;
+        //timerT = new Timer();
+        //Debug.Assert(timerT != null, "Timer is null!");
 
-        // Set the duration
-        timer = duration;
-        this.duration = duration;
+        minTime = GameManager.Instance.roundDuration / 3; // 1/3 of duration
+        midTime = (GameManager.Instance.roundDuration * 2) / 3; // 2/3 of duration
 
-        minTime = timer / 3; // 1/3 of duration
-        midTime = (timer * 2) / 3; // 2/3 of duration
-
-        //await CountdownAsync();
-        StopAllCoroutines();
-        StartCoroutine(CountdownActive());
+        timerT.StartCountdown(GameManager.Instance.roundDuration);
     }
+
+    private void Update()
+    {
+        // Update the fillamount, so the bar decreases overtime
+        timeBar.fillAmount = timerT.GetTime() / GameManager.Instance.roundDuration;
+
+        UpdateColour(timerT.GetTime());
+    }
+
+    public void Reset()
+    {
+        //timerT.StopCountdown();
+        timerT.StartCountdown(GameManager.Instance.roundDuration);
+    }
+
+
+    //public async void StartCountdown(float duration)
+    //{
+    //    // Begin countdown timer
+    //    isCountingDown = true;
+
+    //    // Set the duration
+    //    timer = duration;
+    //    this.duration = duration;
+
+    //    minTime = timer / 3; // 1/3 of duration
+    //    midTime = (timer * 2) / 3; // 2/3 of duration
+
+    //    //await CountdownAsync();
+    //    StopAllCoroutines();
+    //    StartCoroutine(CountdownActive());
+    //}
 
     public void StopCountdown()
     {
@@ -41,54 +69,54 @@ public class TimerBar : MonoBehaviour
         return timer;
     }
 
-    private async Task CountdownAsync()
-    {
-        // Decrease the time if we still have time left
-        while (timer > 0.0f /*&& isCountingDown*/)
-        {
-            if (!isCountingDown)
-                break;
+    //private async Task CountdownAsync()
+    //{
+    //    // Decrease the time if we still have time left
+    //    while (timer > 0.0f /*&& isCountingDown*/)
+    //    {
+    //        if (!isCountingDown)
+    //            break;
 
-            timer -= Time.deltaTime;
+    //        timer -= Time.deltaTime;
 
-            // Display time in seconds
-            int time = (int)timer;
-            UIManager.Instance.timerText.text = time.ToString();
+    //        // Display time in seconds
+    //        int time = (int)timer;
+    //        UIManager.Instance.timerText.text = time.ToString();
 
-            // Update the fillamount, so the bar decreases overtime
-            timeBar.fillAmount = timer / duration;
+    //        // Update the fillamount, so the bar decreases overtime
+    //        timeBar.fillAmount = timer / duration;
 
-            UpdateColour(timer);
+    //        UpdateColour(timer);
 
-            await Task.Yield();
-        }
-    }
+    //        await Task.Yield();
+    //    }
+    //}
 
-    private IEnumerator CountdownActive()
-    {
-        // Decrease the time if we still have time left
-        while (timer > 0.0f /*&& isCountingDown*/)
-        {
-            if (!isCountingDown)
-                break;
+    //private IEnumerator CountdownActive()
+    //{
+    //    // Decrease the time if we still have time left
+    //    while (timer > 0.0f /*&& isCountingDown*/)
+    //    {
+    //        if (!isCountingDown)
+    //            break;
 
-            timer -= Time.deltaTime;
+    //        timer -= Time.deltaTime;
 
-            // Display time in seconds
-            int time = (int)timer;
-            UIManager.Instance.timerText.text = time.ToString();
+    //        // Display time in seconds
+    //        int time = (int)timer;
+    //        UIManager.Instance.timerText.text = time.ToString();
 
-            // Update the fillamount, so the bar decreases overtime
-            timeBar.fillAmount = timer / duration;
+    //        // Update the fillamount, so the bar decreases overtime
+    //        timeBar.fillAmount = timer / duration;
 
-            UpdateColour(timer);
+    //        UpdateColour(timer);
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        // Proceed to the next round if player doesn't select anything
-        GameManager.Instance.NextRound();
-    }
+    //    // Proceed to the next round if player doesn't select anything
+    //    GameManager.Instance.NextRound();
+    //}
 
     private void UpdateColour(float time)
     {
