@@ -491,6 +491,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colour: 2
+  colourId: 0
+  colourType: {fileID: 11400000, guid: 76bdbcd42df23e448bc12f7cc4e6cd13, type: 2}
 --- !u!1 &418216066
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,10 +542,16 @@ MonoBehaviour:
   - Yellow
   - Blue
   colours:
-  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0.13080311, b: 1, a: 1}
   - {r: 1, g: 0.9723209, b: 0, a: 1}
-  - {r: 0, g: 0.22933388, b: 1, a: 1}
+  - {r: 1, g: 0.011301808, b: 0, a: 1}
   - {r: 0.17307985, g: 1, b: 0, a: 1}
+  colourIds: 
+  colourTypes:
+  - {fileID: 11400000, guid: 9b112b6daddc66c479356372747207fb, type: 2}
+  - {fileID: 11400000, guid: bc105e7831874964d8eb5601e66b3463, type: 2}
+  - {fileID: 11400000, guid: 98f4904c14321094abd22759d2fa2caf, type: 2}
+  - {fileID: 11400000, guid: 76bdbcd42df23e448bc12f7cc4e6cd13, type: 2}
 --- !u!1 &439598280
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colourWordManager: {fileID: 418216068}
   timerBar: {fileID: 766631014}
-  rounds: 5
+  rounds: 10
   roundDuration: 5
 --- !u!1 &550741238
 GameObject:
@@ -831,6 +839,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colour: 1
+  colourId: 0
+  colourType: {fileID: 11400000, guid: 98f4904c14321094abd22759d2fa2caf, type: 2}
 --- !u!1 &571558916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,6 +1760,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colour: 0
+  colourId: 0
+  colourType: {fileID: 11400000, guid: 9b112b6daddc66c479356372747207fb, type: 2}
 --- !u!1 &1221281387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,6 +2130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colour: 3
+  colourId: 0
+  colourType: {fileID: 11400000, guid: bc105e7831874964d8eb5601e66b3463, type: 2}
 --- !u!1 &1649703380
 GameObject:
   m_ObjectHideFlags: 0

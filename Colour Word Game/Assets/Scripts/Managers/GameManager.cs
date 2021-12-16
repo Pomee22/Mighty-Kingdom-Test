@@ -16,6 +16,12 @@ public class GameManager : MonoBehaviour
 
     private int score = 0;
 
+    // Todo:
+    // Let time affect the score
+    // Either by using a range or dynamically 
+    // determining the score based off time
+    private float minTime, midTime, maxTime;
+
     public enum GameState
     {
         START,
@@ -61,7 +67,7 @@ public class GameManager : MonoBehaviour
                 }
             case GameState.GAME:
                 timerBar.StartCountdown(roundDuration);
-                colourWordManager.Randomise();
+                colourWordManager.Initialise();
                 // Start game loop
                 break;
             case GameState.END:
@@ -76,8 +82,14 @@ public class GameManager : MonoBehaviour
     // any one of the given colour options
     public void ColourSelected(ColourOption colourOption)
     {
-        if (ColourWordManager.Instance.CompareColours(colourOption.colour))
+        // If the player selected the correct colour...
+        if (ColourWordManager.Instance.CompareColours(colourOption))
+        {
+            // Check the time
+            float timeLeft = timerBar.GetTime();
+            
             score++;
+        }
 
         currentRound++;
 
@@ -85,6 +97,9 @@ public class GameManager : MonoBehaviour
         if (currentRound == rounds)
             UpdateGameState(GameState.END);
         else
-            UpdateGameState(GameState.GAME);
+        {
+            timerBar.StartCountdown(roundDuration);
+            colourWordManager.SelectNewColourWord();
+        }
     }
 }

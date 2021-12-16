@@ -37,6 +37,11 @@ public class TimerBar : MonoBehaviour
         isCountingDown = false;
     }
 
+    public float GetTime()
+    {
+        return timer;
+    }
+
     private async Task CountdownAsync()
     {
         // Decrease the time if we still have time left

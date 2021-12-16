@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColourOption : MonoBehaviour
+[CreateAssetMenu(fileName = "Colour", menuName = "ScriptableObjects/ColourType", order = 1)]
+public class ColourType : ScriptableObject
 {
-    public GameManager.Colours colour;
+    public Color colour;
 
-    public int colourId;
+    public GameManager.Colours colourId;
 
-    public ColourType colourType;
+    public string colourName;
 
     // Start is called before the first frame update
     void Start()
