@@ -28,15 +28,12 @@ public class ColourWordManager : MonoBehaviour
 
     public void Initialise()
     {
+        // First attempt to randomise the two indexes since they are at a default of 0
         colourIndex = Random.Range(0, colourTypes.Count);
         currentColour = colourTypes[colourIndex];
 
         wordIndex = Random.Range(0, colourTypes.Count);
         currentWord = colourTypes[wordIndex];
-
-        // Update the colour word text
-        UIManager.Instance.colourWord.text = colourTypes[wordIndex].colourName;
-        UIManager.Instance.colourWord.color = colourTypes[colourIndex].colour;
     }
 
     /// <summary>

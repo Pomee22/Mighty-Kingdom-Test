@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
             case GameState.GAME:
                 timerBar.StartCountdown(roundDuration);
                 colourWordManager.Initialise();
+                colourWordManager.SelectNewColourWord();
                 // Start game loop
                 break;
             case GameState.END:
