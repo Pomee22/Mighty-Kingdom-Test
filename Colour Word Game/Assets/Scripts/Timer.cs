@@ -1,31 +1,30 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// General counting timer that counts up.
+/// </summary>
 public class Timer : MonoBehaviour
 {
     private float timer = 0.0f;
-    private float duration;
     private bool isCountingDown;
 
-    public async void StartCountdown(float duration)
+    public void StartCountdown()
     {
-        // Begin countdown timer
+        // Set the duration
+        timer = 0.0f;
+
         isCountingDown = true;
 
-        // Set the duration
-        timer = duration;
-        this.duration = duration;
-
         //await CountdownAsync();
-        StopAllCoroutines();
         StartCoroutine(CountdownActive());
     }
 
-    public void StopCountdown()
+    public void StopCountDown()
     {
-        // Stop countdown timer
         isCountingDown = false;
+
+        StopAllCoroutines();
     }
 
     public float GetTime()
@@ -36,12 +35,9 @@ public class Timer : MonoBehaviour
     private IEnumerator CountdownActive()
     {
         // Decrease the time if we still have time left
-        while (timer > 0.0f /*&& isCountingDown*/)
+        while (isCountingDown)
         {
-            if (!isCountingDown)
-                break;
-
-            timer -= Time.deltaTime;
+            timer += Time.deltaTime;
 
             // Display time in seconds
             int time = (int)timer;
@@ -49,8 +45,5 @@ public class Timer : MonoBehaviour
 
             yield return null;
         }
-
-        // Proceed to the next round if player doesn't select anything
-        GameManager.Instance.NextRound();
     }
 }

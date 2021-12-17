@@ -1,122 +1,43 @@
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TimerBar : MonoBehaviour
 {
-    [SerializeField] private Image timeBar;
-
-    [SerializeField] private Timer timerT;
-
-    private float timer = 0.0f;
-    private float duration;
-    private bool isCountingDown;
+    [SerializeField] private Image timerBar;
+    [SerializeField] private Timer roundTimer;
 
     private float minTime, midTime;
+    private float timeRemaining;
 
     private void Start()
     {
-        //timerT = new Timer();
-        //Debug.Assert(timerT != null, "Timer is null!");
-
         minTime = GameManager.Instance.roundDuration / 3; // 1/3 of duration
         midTime = (GameManager.Instance.roundDuration * 2) / 3; // 2/3 of duration
 
-        timerT.StartCountdown(GameManager.Instance.roundDuration);
+        roundTimer.StartCountdown();
     }
 
     private void Update()
     {
-        // Update the fillamount, so the bar decreases overtime
-        timeBar.fillAmount = timerT.GetTime() / GameManager.Instance.roundDuration;
+        timeRemaining = GameManager.Instance.roundDuration - roundTimer.GetTime();
 
-        UpdateColour(timerT.GetTime());
+        // Update the fillamount so the bar decreases overtime
+        timerBar.fillAmount = timeRemaining / GameManager.Instance.roundDuration;
+
+        UpdateColour(timeRemaining);
+
+        // Proceed to the next round if player runs out of time
+        if (timeRemaining <= 0)
+        {
+            GameManager.Instance.NextRound();
+        }
     }
 
     public void Reset()
     {
-        //timerT.StopCountdown();
-        timerT.StartCountdown(GameManager.Instance.roundDuration);
+        roundTimer.StopCountDown();
+        roundTimer.StartCountdown();
     }
-
-
-    //public async void StartCountdown(float duration)
-    //{
-    //    // Begin countdown timer
-    //    isCountingDown = true;
-
-    //    // Set the duration
-    //    timer = duration;
-    //    this.duration = duration;
-
-    //    minTime = timer / 3; // 1/3 of duration
-    //    midTime = (timer * 2) / 3; // 2/3 of duration
-
-    //    //await CountdownAsync();
-    //    StopAllCoroutines();
-    //    StartCoroutine(CountdownActive());
-    //}
-
-    public void StopCountdown()
-    {
-        // Stop countdown timer
-        isCountingDown = false;
-    }
-
-    public float GetTime()
-    {
-        return timer;
-    }
-
-    //private async Task CountdownAsync()
-    //{
-    //    // Decrease the time if we still have time left
-    //    while (timer > 0.0f /*&& isCountingDown*/)
-    //    {
-    //        if (!isCountingDown)
-    //            break;
-
-    //        timer -= Time.deltaTime;
-
-    //        // Display time in seconds
-    //        int time = (int)timer;
-    //        UIManager.Instance.timerText.text = time.ToString();
-
-    //        // Update the fillamount, so the bar decreases overtime
-    //        timeBar.fillAmount = timer / duration;
-
-    //        UpdateColour(timer);
-
-    //        await Task.Yield();
-    //    }
-    //}
-
-    //private IEnumerator CountdownActive()
-    //{
-    //    // Decrease the time if we still have time left
-    //    while (timer > 0.0f /*&& isCountingDown*/)
-    //    {
-    //        if (!isCountingDown)
-    //            break;
-
-    //        timer -= Time.deltaTime;
-
-    //        // Display time in seconds
-    //        int time = (int)timer;
-    //        UIManager.Instance.timerText.text = time.ToString();
-
-    //        // Update the fillamount, so the bar decreases overtime
-    //        timeBar.fillAmount = timer / duration;
-
-    //        UpdateColour(timer);
-
-    //        yield return null;
-    //    }
-
-    //    // Proceed to the next round if player doesn't select anything
-    //    GameManager.Instance.NextRound();
-    //}
 
     private void UpdateColour(float time)
     {
@@ -139,6 +60,6 @@ public class TimerBar : MonoBehaviour
             newColour = Color.red;
         }
 
-        timeBar.color = newColour;
+        timerBar.color = newColour;
     }
 }

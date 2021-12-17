@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public float roundDuration = 5.0f;
     private int currentRound = 0;
 
+    [SerializeField] private Timer gameTimer; 
+
     private int score = 0;
 
     // Todo:
@@ -69,11 +71,14 @@ public class GameManager : MonoBehaviour
                 //timerBar.StartCountdown(roundDuration);
                 colourWordManager.Initialise();
                 colourWordManager.SelectNewColourWord();
+                gameTimer.StartCountdown();
                 // Start game loop
                 break;
             case GameState.END:
                 UIManager.Instance.DisplayEndGame(score);
                 Debug.Log("GAME END");
+                Debug.Log("Time taken: " + gameTimer.GetTime());
+                gameTimer.StopCountDown();
                 break;
         }
     }
@@ -85,10 +90,7 @@ public class GameManager : MonoBehaviour
     {
         // If the player selected the correct colour...
         if (ColourWordManager.Instance.CompareColours(colourOption))
-        {
-            // Check the time
-            float timeLeft = timerBar.GetTime();
-            
+        {        
             score++;
         }
 
