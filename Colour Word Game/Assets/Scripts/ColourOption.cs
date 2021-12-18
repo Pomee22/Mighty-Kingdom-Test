@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColourOption : MonoBehaviour
 {
-    public GameManager.Colours colour;
+    public ColourWordManager.Colours colour;
 
     public int colourId;
 

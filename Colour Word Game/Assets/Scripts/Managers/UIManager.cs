@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     public GameObject endContent;
 
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI timeTakenText;
+    public TextMeshProUGUI timeScoreText;
 
     public TextMeshProUGUI colourWord;
     public TextMeshProUGUI scoreText;
@@ -66,9 +68,11 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void DisplayEndGame(int score)
+    public void DisplayEndGame(int score, int timeTaken, int timeScore)
     {
         scoreText.text = score.ToString();
+        timeTakenText.text = timeTaken.ToString();
+        timeScoreText.text = timeScore.ToString();
 
         endContent.SetActive(true);
         gameContent.SetActive(false);

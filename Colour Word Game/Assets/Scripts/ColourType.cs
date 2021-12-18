@@ -7,7 +7,7 @@ public class ColourType : ScriptableObject
 {
     public Color colour;
 
-    public GameManager.Colours colourId;
+    public ColourWordManager.Colours colourId;
 
     public string colourName;
 

@@ -10,6 +10,14 @@ public class ColourWordManager : MonoBehaviour
 {
     public static ColourWordManager Instance;
 
+    public enum Colours
+    {
+        RED,
+        YELLOW,
+        BLUE,
+        GREEN
+    };
+
     [SerializeField] private List<ColourType> colourTypes;
 
     private int colourIndex;    // Used to randomly pick a colour

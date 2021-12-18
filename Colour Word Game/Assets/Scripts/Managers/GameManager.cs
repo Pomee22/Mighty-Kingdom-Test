@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,14 +32,6 @@ public class GameManager : MonoBehaviour
         END
     };
 
-    public enum Colours
-    {
-        RED,
-        YELLOW,
-        BLUE,
-        GREEN
-    };
-
     private GameState curretState;
 
     private void Awake()
@@ -63,10 +56,8 @@ public class GameManager : MonoBehaviour
         // Run any events on game state change
         switch(curretState)
         {
-            case GameState.START:
-                {
-                    break;
-                }
+            case GameState.START:               
+                break;                
             case GameState.GAME:
                 //timerBar.StartCountdown(roundDuration);
                 colourWordManager.Initialise();
@@ -75,12 +66,27 @@ public class GameManager : MonoBehaviour
                 // Start game loop
                 break;
             case GameState.END:
-                UIManager.Instance.DisplayEndGame(score);
-                Debug.Log("GAME END");
-                Debug.Log("Time taken: " + gameTimer.GetTime());
-                gameTimer.StopCountDown();
+                EndGame();
                 break;
         }
+    }
+
+    private void EndGame()
+    {
+        // Stop the game timer
+        gameTimer.StopCountDown();
+
+        // Round the timer as an int
+        int timeTaken = (int)Math.Round(gameTimer.GetTime(), 0);
+        int timeScore = GetTimeScore(timeTaken);
+
+        // Update ui score
+        UIManager.Instance.DisplayEndGame(score, timeTaken, timeScore);
+    }
+
+    private int GetTimeScore(int timeTaken)
+    {
+        return ((int)roundDuration * rounds) - timeTaken;
     }
 
     // Called by Unity onclick event.
