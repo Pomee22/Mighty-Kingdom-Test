@@ -9,18 +9,27 @@ public class Timer : MonoBehaviour
     private float timer = 0.0f;
     private bool isCountingDown;
 
-    public void StartCountdown()
+    public void StartCountUp()
     {
+        Debug.Log("starting timer");
         // Set the duration
         timer = 0.0f;
 
         isCountingDown = true;
 
         //await CountdownAsync();
-        StartCoroutine(CountdownActive());
+        StartCoroutine(CountUpActive());
     }
 
-    public void StopCountDown()
+    public void StartCountDown(int duration)
+    {
+        timer = duration;
+        isCountingDown = true;
+
+        StartCoroutine(CountDownActive());
+    }
+
+    public void Stop()
     {
         isCountingDown = false;
 
@@ -32,7 +41,7 @@ public class Timer : MonoBehaviour
         return timer;
     }
 
-    private IEnumerator CountdownActive()
+    private IEnumerator CountUpActive()
     {
         // Decrease the time if we still have time left
         while (isCountingDown)
@@ -42,6 +51,16 @@ public class Timer : MonoBehaviour
             // Display time in seconds
             int time = (int)timer;
             UIManager.Instance.timerText.text = time.ToString();
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator CountDownActive()
+    {
+        while(timer > 0.0f)
+        {
+            timer -= Time.deltaTime;
 
             yield return null;
         }

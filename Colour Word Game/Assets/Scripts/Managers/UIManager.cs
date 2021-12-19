@@ -36,9 +36,12 @@ public class UIManager : MonoBehaviour
     /// Button onclick event.
     /// Starts the game.
     /// </summary>
-    public void StartGame()
+    public async Task StartGame()
     {
         startContent.SetActive(false);
+
+        await Task.Delay(3000);
+
         gameContent.SetActive(true);
     }
 

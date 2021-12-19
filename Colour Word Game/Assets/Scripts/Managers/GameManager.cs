@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("The number of rounds the game consists of.")]
     public int rounds = 5;
-    public float roundDuration = 5.0f;
+    public int roundDuration = 5;
     private int currentRound = 0;
 
     [SerializeField] private Timer gameTimer; 
@@ -77,11 +77,11 @@ public class GameManager : MonoBehaviour
 
     private async void SetUpGameLevel()
     {
-        // Wait for the transition animation to finish
-        await UIManager.Instance.Transition();
+        // Wait for the rransition into the game scene
+        await UIManager.Instance.StartGame();
 
-        // Disable the current start ui
-        UIManager.Instance.StartGame();
+        // Begin the timer after waiting 
+        gameTimer.StartCountUp();
     }
 
     private void StartGameLevel()
@@ -90,14 +90,14 @@ public class GameManager : MonoBehaviour
         colourWordManager.Initialise();
 
         // Set up timer and scene
-        gameTimer.StartCountdown();
+        //gameTimer.StartCountdown();
         SetUpGameLevel();
     }
 
     private void EndGame()
     {
         // Stop the game timer
-        gameTimer.StopCountDown();
+        gameTimer.Stop();
 
         // Round the timer as an int
         int timeTaken = (int)Math.Round(gameTimer.GetTime(), 0);

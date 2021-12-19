@@ -14,12 +14,12 @@ public class TimerBar : MonoBehaviour
         minTime = GameManager.Instance.roundDuration / 3; // 1/3 of duration
         midTime = (GameManager.Instance.roundDuration * 2) / 3; // 2/3 of duration
 
-        roundTimer.StartCountdown();
+        roundTimer.StartCountDown(GameManager.Instance.roundDuration);
     }
 
     private void Update()
     {
-        timeRemaining = GameManager.Instance.roundDuration - roundTimer.GetTime();
+        timeRemaining = /*GameManager.Instance.roundDuration - */roundTimer.GetTime();
 
         // Update the fillamount so the bar decreases overtime
         timerBar.fillAmount = timeRemaining / GameManager.Instance.roundDuration;
@@ -35,8 +35,8 @@ public class TimerBar : MonoBehaviour
 
     public void Reset()
     {
-        roundTimer.StopCountDown();
-        roundTimer.StartCountdown();
+        roundTimer.Stop();
+        roundTimer.StartCountDown(GameManager.Instance.roundDuration);
     }
 
     private void UpdateColour(float time)
