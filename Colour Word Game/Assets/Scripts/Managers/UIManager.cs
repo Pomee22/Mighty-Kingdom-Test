@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    public GameObject menuScreen;
+    public GameObject gamemodeScreen;
+
     public GameObject startContent;
     public GameObject gameContent;
     public GameObject endContent;
@@ -18,6 +21,8 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI colourWord;
     public TextMeshProUGUI scoreText;
+
+    public TextMeshProUGUI descriptionText;
 
     private void Awake()
     {
@@ -31,19 +36,13 @@ public class UIManager : MonoBehaviour
     /// Button onclick event.
     /// Starts the game.
     /// </summary>
-    public async void StartGame()
+    public void StartGame()
     {
-        // Wait for the transition animation to finish
-        await Transition();
-
         startContent.SetActive(false);
         gameContent.SetActive(true);
-
-        // Then proceed to the game state
-        GameManager.Instance.UpdateGameState(GameManager.GameState.GAME);
     }
 
-    private async Task Transition()
+    public async Task Transition()
     {
         await Task.Yield();
     }
@@ -76,5 +75,11 @@ public class UIManager : MonoBehaviour
 
         endContent.SetActive(true);
         gameContent.SetActive(false);
+    }
+
+    public void EnterGameModeScreen()
+    {
+        menuScreen.SetActive(false);
+        gamemodeScreen.SetActive(true);
     }
 }

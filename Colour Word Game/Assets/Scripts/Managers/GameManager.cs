@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         START,
-        GAME,
+        CLASSICMODE,
+        SWITCHMODE,
+        QUICKCLASSICMODE,
+        QUICKSWITCHMODE,
         END
     };
 
@@ -58,17 +61,36 @@ public class GameManager : MonoBehaviour
         {
             case GameState.START:               
                 break;                
-            case GameState.GAME:
+            case GameState.CLASSICMODE:
                 //timerBar.StartCountdown(roundDuration);
                 colourWordManager.Initialise();
                 colourWordManager.SelectNewColourWord();
                 gameTimer.StartCountdown();
+                SetUpGameLevel();
                 // Start game loop
                 break;
             case GameState.END:
                 EndGame();
                 break;
         }
+    }
+
+    /// <summary>
+    /// Button onclick event.
+    /// Starts the game.
+    /// </summary>
+    public void StartGame(GameModeOption gameModeOption)
+    {
+        UpdateGameState(gameModeOption.gameMode);
+    }
+
+    private async void SetUpGameLevel()
+    {
+        // Wait for the transition animation to finish
+        await UIManager.Instance.Transition();
+
+        // Disable the current start ui
+        UIManager.Instance.StartGame();
     }
 
     private void EndGame()
