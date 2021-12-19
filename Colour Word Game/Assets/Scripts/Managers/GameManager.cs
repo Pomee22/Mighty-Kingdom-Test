@@ -19,19 +19,13 @@ public class GameManager : MonoBehaviour
 
     private int score = 0;
 
-    // Todo:
-    // Let time affect the score
-    // Either by using a range or dynamically 
-    // determining the score based off time
-    private float minTime, midTime, maxTime;
+    private bool[] correctAnswers;
 
     public enum GameState
     {
         START,
         CLASSICMODE,
-        SWITCHMODE,
-        QUICKCLASSICMODE,
-        QUICKSWITCHMODE,
+        QUICKMODE,
         END
     };
 
@@ -48,6 +42,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        correctAnswers = new bool[rounds];
+
         UpdateGameState(GameState.START);
     }
 
@@ -62,12 +58,7 @@ public class GameManager : MonoBehaviour
             case GameState.START:               
                 break;                
             case GameState.CLASSICMODE:
-                //timerBar.StartCountdown(roundDuration);
-                colourWordManager.Initialise();
-                colourWordManager.SelectNewColourWord();
-                gameTimer.StartCountdown();
-                SetUpGameLevel();
-                // Start game loop
+                StartGameLevel();
                 break;
             case GameState.END:
                 EndGame();
@@ -93,6 +84,16 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.StartGame();
     }
 
+    private void StartGameLevel()
+    {
+        // Randomise colour word 
+        colourWordManager.Initialise();
+
+        // Set up timer and scene
+        gameTimer.StartCountdown();
+        SetUpGameLevel();
+    }
+
     private void EndGame()
     {
         // Stop the game timer
@@ -106,9 +107,33 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.DisplayEndGame(score, timeTaken, timeScore);
     }
 
+    /// <summary>
+    /// Calculates and returns the time-based score
+    /// The time score is considered only if the player
+    /// selects the correct answer/s
+    /// </summary>
+    /// <param name="timeTaken"></param>
+    /// <returns></returns>
     private int GetTimeScore(int timeTaken)
     {
-        return ((int)roundDuration * rounds) - timeTaken;
+        int resultantTimeScore = 0;
+
+        // Calculate the timeScore and split it according to the amount of rounds
+        int timeScore = ((int)roundDuration * rounds) - timeTaken;
+        timeScore /= rounds;
+        
+        for(int i = 0; i < rounds; i++)
+        {
+            // If the answer for the round was correct...
+            if(correctAnswers[i])
+            {
+                // Add the time bonus point
+                resultantTimeScore += timeScore;
+            }
+        }
+
+        return resultantTimeScore;
+
     }
 
     // Called by Unity onclick event.
@@ -120,7 +145,10 @@ public class GameManager : MonoBehaviour
         if (ColourWordManager.Instance.CompareColours(colourOption))
         {        
             score++;
+            correctAnswers[currentRound] = true;
         }
+        else
+            correctAnswers[currentRound] = false;
 
         NextRound();
     }

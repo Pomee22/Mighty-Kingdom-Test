@@ -42,6 +42,8 @@ public class ColourWordManager : MonoBehaviour
 
         wordIndex = Random.Range(0, colourTypes.Count);
         currentWord = colourTypes[wordIndex];
+
+        SelectNewColourWord();
     }
 
     /// <summary>
