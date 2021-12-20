@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public ColourWordManager colourWordManager;
-    public TimerBar timerBar;
+    public StartTimer startTimer;
 
     [Tooltip("The number of rounds the game consists of.")]
     public int rounds = 5;
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
             case GameState.START:               
                 break;                
             case GameState.CLASSICMODE:
-                StartGameLevel();
+                SetUpGameLevel();
                 break;
             case GameState.END:
                 EndGame();
@@ -75,13 +76,25 @@ public class GameManager : MonoBehaviour
         UpdateGameState(gameModeOption.gameMode);
     }
 
-    private async void SetUpGameLevel()
+    public async void SetUpGameLevel()
     {
+        await Countdown();
+
+        colourWordManager.Initialise();
+
         // Wait for the rransition into the game scene
-        await UIManager.Instance.StartGame();
+        UIManager.Instance.StartGame();
 
         // Begin the timer after waiting 
         gameTimer.StartCountUp();
+    }
+
+    private async Task Countdown()
+    {
+        UIManager.Instance.startContent.SetActive(false);
+        startTimer.StartCountDown();
+
+        await Task.Delay(startTimer.time * 1000);
     }
 
     private void StartGameLevel()
@@ -162,7 +175,6 @@ public class GameManager : MonoBehaviour
             UpdateGameState(GameState.END);
         else
         {
-            timerBar.Reset();
             colourWordManager.SelectNewColourWord();
         }
     }

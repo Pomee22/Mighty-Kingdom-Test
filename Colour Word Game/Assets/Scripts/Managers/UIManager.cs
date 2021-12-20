@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
     public GameObject gameContent;
     public GameObject endContent;
 
-    public TextMeshProUGUI timerText;
     public TextMeshProUGUI timeTakenText;
     public TextMeshProUGUI timeScoreText;
 
@@ -23,6 +22,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public TextMeshProUGUI descriptionText;
+
+    public Timer startTimer;
+    public TextMeshProUGUI startTimerText;
 
     private void Awake()
     {
@@ -36,11 +38,11 @@ public class UIManager : MonoBehaviour
     /// Button onclick event.
     /// Starts the game.
     /// </summary>
-    public async Task StartGame()
+    public void StartGame()
     {
-        startContent.SetActive(false);
+        //startTimer.StartCountDown()
 
-        await Task.Delay(3000);
+        startContent.SetActive(false);
 
         gameContent.SetActive(true);
     }
@@ -53,21 +55,6 @@ public class UIManager : MonoBehaviour
     public void UpdateStartContent(bool status)
     {
         startContent.SetActive(status);
-    }
-
-    public void UpdateGameContent(bool status)
-    {
-
-    }
-
-    public void UpdateEndContent(bool status)
-    {
-
-    }
-
-    public void UpdateColourWord(int wordIndex, int colourIndex)
-    {
-        
     }
 
     public void DisplayEndGame(int score, int timeTaken, int timeScore)

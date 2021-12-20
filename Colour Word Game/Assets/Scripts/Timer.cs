@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,8 +7,15 @@ using UnityEngine;
 /// </summary>
 public class Timer : MonoBehaviour
 {
+    public event Action onCompleteEvent;
+
     private float timer = 0.0f;
     private bool isCountingDown;
+
+    public void Initialise(Action actionEvent)
+    {
+        onCompleteEvent = actionEvent;
+    }
 
     public void StartCountUp()
     {
@@ -50,10 +58,13 @@ public class Timer : MonoBehaviour
 
             // Display time in seconds
             int time = (int)timer;
-            UIManager.Instance.timerText.text = time.ToString();
 
             yield return null;
         }
+
+        onCompleteEvent?.Invoke();
+
+        // Play on-complete event
     }
 
     private IEnumerator CountDownActive()
@@ -64,5 +75,9 @@ public class Timer : MonoBehaviour
 
             yield return null;
         }
+
+        Debug.Log("Passed null");
+
+        onCompleteEvent?.Invoke();
     }
 }
