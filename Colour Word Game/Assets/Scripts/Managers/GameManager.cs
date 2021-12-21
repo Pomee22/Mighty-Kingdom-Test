@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         START,
-        CLASSICMODE,
+        GAME,
         QUICKMODE,
         END
     };
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.START:               
                 break;                
-            case GameState.CLASSICMODE:
+            case GameState.GAME:
                 SetUpGameLevel();
                 break;
             case GameState.END:
