@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     {
         START,
         GAME,
-        QUICKMODE,
         END
     };
 
@@ -71,9 +70,9 @@ public class GameManager : MonoBehaviour
     /// Button onclick event.
     /// Starts the game.
     /// </summary>
-    public void StartGame(GameModeOption gameModeOption)
+    public void StartGame()
     {
-        UpdateGameState(gameModeOption.gameMode);
+        UpdateGameState(GameState.GAME);
     }
 
     public async void SetUpGameLevel()
