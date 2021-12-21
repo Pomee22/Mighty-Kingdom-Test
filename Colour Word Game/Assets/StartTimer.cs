@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Used to convey to the player that the 
@@ -38,30 +39,44 @@ public class StartTimer : MonoBehaviour
     {
         Debug.Log("Completed timer event!");
 
-        //GameManager.Instance.SetUpGameLevel();
-
         gameObject.SetActive(false);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         timer.Initialise(OnCompleteEvent);
     }
 
-    private void Update()
-    {
-        int timeRemaining = (int)timer.GetTime() + 1;
-        timeText.text = timeRemaining.ToString();
-    }
-
-    public void StartCountDown()
+    public async void StartCountDown()
     {
         Debug.Log("StartCountDown");
 
         gameObject.SetActive(true);
 
-        // Send in finish event
+        // Send in the on-complete event
         timer.StartCountDown(time);
+
+        await UpdateUI();
+    }
+
+    /// <summary>
+    /// Updates it's associated text while
+    /// the timer is active.
+    /// </summary>
+    /// <returns></returns>
+    private async Task UpdateUI()
+    {
+        while(timer.GetTime() > 0.0f)
+        {
+            // Display the time in seconds
+            int timeRemaining = (int)timer.GetTime();
+            timeText.text = timeRemaining.ToString();
+
+            // Display "start" when the timer reaches 0
+            if ((int)timer.GetTime() == 0)
+                timeText.text = "START";
+
+            await Task.Yield();
+        }
     }
 }
