@@ -190,6 +190,7 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelComplete()
     {
+        // Play a sequisential animation
 
     }
 }

@@ -16,10 +16,10 @@ public class UIManager : MonoBehaviour
     public GameObject endContent;
 
     public TextMeshProUGUI timeTakenText;
-    public TextMeshProUGUI timeScoreText;
 
     public TextMeshProUGUI colourWord;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI answersText;
 
     public TextMeshProUGUI descriptionText;
 
@@ -63,7 +63,6 @@ public class UIManager : MonoBehaviour
     {
         scoreText.text = score.ToString();
         timeTakenText.text = timeTaken.ToString();
-        timeScoreText.text = timeScore.ToString();
 
         endContent.SetActive(true);
         gameContent.SetActive(false);
