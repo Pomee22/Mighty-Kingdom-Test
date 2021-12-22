@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
@@ -11,6 +10,9 @@ using System.Threading.Tasks;
 /// </summary>
 public class StartTimer : MonoBehaviour
 {
+    [Header("Time")]
+    [Space]
+    [Tooltip("The time it takes for the game to begin")]
     public int time = 3;
 
     [SerializeField] private Timer timer;
@@ -18,6 +20,14 @@ public class StartTimer : MonoBehaviour
     public event Action OnCompleteEvent;
 
     private TextMeshProUGUI timeText;
+
+    [Header("Animation")]
+    [Space]
+    public float endFont = 24;
+    public float startFont = 34;
+
+    public Color32 startColour;
+    public Color32 endColour;
 
     private void Awake()
     {
@@ -45,6 +55,9 @@ public class StartTimer : MonoBehaviour
     void Start()
     {
         timer.Initialise(OnCompleteEvent);
+
+        timeText.faceColor = startColour;
+        timeText.fontSize = startFont;
     }
 
     public async void StartCountDown()
@@ -56,18 +69,17 @@ public class StartTimer : MonoBehaviour
         // Send in the on-complete event
         timer.StartCountDown(time);
 
-        await UpdateUI();
+        await FadeOutText();
     }
 
-    /// <summary>
-    /// Updates it's associated text while
-    /// the timer is active.
-    /// </summary>
-    /// <returns></returns>
-    private async Task UpdateUI()
+    private async Task FadeOutText()
     {
-        while(timer.GetTime() > 0.0f)
+        int prevTime = (int)timer.GetTime();
+
+        while (timer.GetTime() > 0.0f)
         {
+            int currentTime = (int)timer.GetTime();
+
             // Display the time in seconds
             int timeRemaining = (int)timer.GetTime();
             timeText.text = timeRemaining.ToString();
@@ -75,6 +87,18 @@ public class StartTimer : MonoBehaviour
             // Display "start" when the timer reaches 0
             if ((int)timer.GetTime() == 0)
                 timeText.text = "START";
+
+            if (currentTime < prevTime)
+            {
+                // Reset the font size and colour
+                timeText.faceColor = startColour;
+                timeText.fontSize = startFont;
+
+                prevTime = currentTime;
+            }
+
+            timeText.fontSize = Mathf.Lerp(timeText.fontSize, endFont, 0.01f);
+            timeText.faceColor = Color32.Lerp(timeText.faceColor, endColour, 0.01f);
 
             await Task.Yield();
         }
