@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private int score = 0;
 
     private bool[] correctAnswers;
+    public int CorrectAnswerCounter { get; set; }
 
     public enum GameState
     {
@@ -168,6 +169,7 @@ public class GameManager : MonoBehaviour
         {        
             score++;
             correctAnswers[currentRound] = true;
+            CorrectAnswerCounter++;
         }
         else
             correctAnswers[currentRound] = false;

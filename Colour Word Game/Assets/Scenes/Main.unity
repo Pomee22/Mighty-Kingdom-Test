@@ -892,18 +892,11 @@ MonoBehaviour:
   timeTakenText: {fileID: 2097366403}
   colourWord: {fileID: 571558918}
   scoreText: {fileID: 1689076133}
-  answersText: {fileID: 913465573}
+  answersText: {fileID: 1799691469}
   descriptionText: {fileID: 0}
   startTimer: {fileID: 519818737}
   startTimerText: {fileID: 228740700}
   gameTimer: {fileID: 1287692962}
-  endColour:
-    serializedVersion: 2
-    rgba: 4294967295
-  startColour:
-    serializedVersion: 2
-    rgba: 16777215
-  duration: 1
 --- !u!1 &367107273
 GameObject:
   m_ObjectHideFlags: 0
