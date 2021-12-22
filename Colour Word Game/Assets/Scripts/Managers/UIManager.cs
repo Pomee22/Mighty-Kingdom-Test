@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
     public Timer startTimer;
     public TextMeshProUGUI startTimerText;
 
+    public TextMeshProUGUI gameTimer;
+
     private void Awake()
     {
         if (Instance)
