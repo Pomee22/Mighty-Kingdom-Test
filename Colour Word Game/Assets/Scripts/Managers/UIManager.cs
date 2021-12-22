@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         startContent.SetActive(status);
     }
 
-    public void DisplayEndGame(int score, int timeTaken, int timeScore)
+    public void DisplayEndGame(int score, int timeTaken)
     {
         scoreText.text = score.ToString();
         timeTakenText.text = timeTaken.ToString();

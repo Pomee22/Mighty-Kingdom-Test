@@ -126,8 +126,11 @@ public class GameManager : MonoBehaviour
         int timeTaken = (int)Math.Round(gameTimer.GetTime(), 0);
         int timeScore = GetTimeScore(timeTaken);
 
+        // Add time bonus points to final score
+        score += timeScore;
+
         // Update ui score
-        UIManager.Instance.DisplayEndGame(score, timeTaken, timeScore);
+        UIManager.Instance.DisplayEndGame(score, timeTaken);
     }
 
     /// <summary>
