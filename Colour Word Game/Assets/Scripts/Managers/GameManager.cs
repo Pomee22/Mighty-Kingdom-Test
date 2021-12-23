@@ -83,6 +83,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        // Play sound
+        SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICK);
+
+
         UpdateGameState(GameState.GAME);
     }
 
@@ -169,13 +173,21 @@ public class GameManager : MonoBehaviour
     {
         // If the player selected the correct colour...
         if (ColourWordManager.Instance.CompareColours(colourOption))
-        {        
+        {
             score++;
             correctAnswers[currentRound] = true;
             CorrectAnswerCounter++;
+
+            // Play correct sound
+            SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKPOS);
         }
         else
+        {
             correctAnswers[currentRound] = false;
+
+            // Play incorrect sound
+            SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKNEG);
+        }
 
         NextRound();
     }
