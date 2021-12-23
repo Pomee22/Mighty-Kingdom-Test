@@ -44,16 +44,6 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.START);
     }
 
-    private void Update()
-    {
-        // If the level is currently running...
-        if(curretState == GameState.GAME)
-        {
-            // Display the time, rounding in 2 decimal places
-            UIManager.Instance.gameTimer.text = $"Time: { gameTimer.GetTime().ToString("f2")}";
-        }
-    }
-
     public void UpdateGameState(GameState state)
     {
         // Change the current game state with a new state
