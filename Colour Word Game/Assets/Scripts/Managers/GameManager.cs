@@ -106,8 +106,12 @@ public class GameManager : MonoBehaviour
     private async Task Countdown()
     {
         UIManager.Instance.startContent.SetActive(false);
-        startTimer.StartCountDown();
 
+        // Delay for one second
+        await Task.Delay(1000);
+
+        // Commence countdown
+        startTimer.StartCountDown();
         await Task.Delay(startTimer.time * 1000);
     }
 

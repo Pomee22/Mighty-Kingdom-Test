@@ -76,6 +76,10 @@ public class StartTimer : MonoBehaviour
     {
         int prevTime = (int)timer.GetTime();
 
+        SoundManager.Instance.Play(SoundManager.Sound.COUNTDOWN);
+
+        bool reachedEndCounter = false;
+
         while (timer.GetTime() > 0.0f)
         {
             int currentTime = (int)timer.GetTime();
@@ -86,7 +90,15 @@ public class StartTimer : MonoBehaviour
 
             // Display "start" when the timer reaches 0
             if ((int)timer.GetTime() == 0)
+            {
                 timeText.text = "START";
+
+                if (!reachedEndCounter)
+                {
+                    SoundManager.Instance.Play(SoundManager.Sound.LASTCOUNTDOWN);
+                    reachedEndCounter = true;
+                }
+            }
 
             if (currentTime < prevTime)
             {
@@ -95,6 +107,11 @@ public class StartTimer : MonoBehaviour
                 timeText.fontSize = startFont;
 
                 prevTime = currentTime;
+
+                if((int)timer.GetTime() > 0)
+                {
+                    SoundManager.Instance.Play(SoundManager.Sound.COUNTDOWN);
+                }
             }
 
             timeText.fontSize = Mathf.Lerp(timeText.fontSize, endFont, 0.01f);

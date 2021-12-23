@@ -17,7 +17,8 @@ public class SoundManager : MonoBehaviour
         BUTTONCLICK,
         BUTTONCLICKPOS,
         BUTTONCLICKNEG,
-        COUNTDOWN
+        COUNTDOWN,
+        LASTCOUNTDOWN
     }
 
     private void Awake()

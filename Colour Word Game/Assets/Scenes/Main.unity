@@ -2691,6 +2691,10 @@ MonoBehaviour:
     sfx: {fileID: 8300000, guid: 839ad369621926e4586d99eeedb73a24, type: 3}
   - sfxType: 2
     sfx: {fileID: 8300000, guid: 785d1e9a87935d0419f8a479022b850c, type: 3}
+  - sfxType: 3
+    sfx: {fileID: 8300000, guid: fb272fbfd8d94744f94488c2e74e6795, type: 3}
+  - sfxType: 4
+    sfx: {fileID: 8300000, guid: 75defd009b6bd2444b01f5bc621e9da2, type: 3}
 --- !u!1 &1003822890
 GameObject:
   m_ObjectHideFlags: 0
