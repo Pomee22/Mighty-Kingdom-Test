@@ -19,8 +19,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Timer gameTimer; 
 
     private int score = 0;
-
-    private bool[] correctAnswers;
     public int CorrectAnswerCounter { get; set; }
 
     public enum GameState
@@ -43,8 +41,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        correctAnswers = new bool[rounds];
-
         UpdateGameState(GameState.START);
     }
 
@@ -66,7 +62,8 @@ public class GameManager : MonoBehaviour
         // Run any events on game state change
         switch(curretState)
         {
-            case GameState.START:               
+            case GameState.START:
+                SetUpStartScreen();
                 break;                
             case GameState.GAME:
                 SetUpGameLevel();
@@ -79,6 +76,18 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Button onclick event.
+    /// Sets up the menu.
+    /// </summary>
+    public void StartMenu()
+    {
+        // Play sound
+        SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICK);
+
+        UpdateGameState(GameState.START);
+    }
+
+    /// <summary>
+    /// Button onclick event.
     /// Starts the game.
     /// </summary>
     public void StartGame()
@@ -86,12 +95,21 @@ public class GameManager : MonoBehaviour
         // Play sound
         SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICK);
 
-
         UpdateGameState(GameState.GAME);
+    }
+
+    private void SetUpStartScreen()
+    {
+        UIManager.Instance.StartMenu();
     }
 
     public async void SetUpGameLevel()
     {
+        // Reset game value
+        currentRound = 0;
+        score = 0;
+        CorrectAnswerCounter = 0;
+
         await Countdown();
 
         colourWordManager.Initialise();
@@ -105,8 +123,6 @@ public class GameManager : MonoBehaviour
 
     private async Task Countdown()
     {
-        UIManager.Instance.startContent.SetActive(false);
-
         // Delay for one second
         await Task.Delay(1000);
 
@@ -155,15 +171,12 @@ public class GameManager : MonoBehaviour
         // Calculate the timeScore and split it according to the amount of rounds
         int timeScore = ((int)roundDuration * rounds) - timeTaken;
         timeScore /= rounds;
-        
-        for(int i = 0; i < rounds; i++)
+
+        // If the answer for the round was correct...
+        for (int i = 0; i < CorrectAnswerCounter; i++)
         {
-            // If the answer for the round was correct...
-            if(correctAnswers[i])
-            {
-                // Add the time bonus point
-                resultantTimeScore += timeScore;
-            }
+            // Add the time bonus point
+            resultantTimeScore += timeScore;        
         }
 
         return resultantTimeScore;
@@ -179,7 +192,6 @@ public class GameManager : MonoBehaviour
         if (ColourWordManager.Instance.CompareColours(colourOption))
         {
             score++;
-            correctAnswers[currentRound] = true;
             CorrectAnswerCounter++;
 
             // Play correct sound
@@ -187,8 +199,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            correctAnswers[currentRound] = false;
-
             // Play incorrect sound
             SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKNEG);
         }

@@ -36,6 +36,13 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
+    public void StartMenu()
+    {
+        endContent.SetActive(false);
+
+        startContent.SetActive(true);
+    }
+
     /// <summary>
     /// Button onclick event.
     /// Starts the game.
@@ -43,15 +50,9 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         //startTimer.StartCountDown()
-
         startContent.SetActive(false);
 
         gameContent.SetActive(true);
-    }
-
-    public async Task Transition()
-    {
-        await Task.Yield();
     }
 
     public void UpdateStartContent(bool status)
@@ -68,11 +69,5 @@ public class UIManager : MonoBehaviour
 
         endContent.SetActive(true);
         gameContent.SetActive(false);
-    }
-
-    public void EnterGameModeScreen()
-    {
-        menuScreen.SetActive(false);
-        gamemodeScreen.SetActive(true);
     }
 }

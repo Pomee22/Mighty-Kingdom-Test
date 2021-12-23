@@ -18,7 +18,7 @@ public class FadeIn : MonoBehaviour
 
     private Task[] tasks;
 
-    void Start()
+    private void OnEnable()
     {
         tasks = new Task[texts.Length];
 

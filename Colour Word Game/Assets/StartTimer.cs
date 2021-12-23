@@ -38,6 +38,11 @@ public class StartTimer : MonoBehaviour
     private void OnEnable()
     {
         OnCompleteEvent += StartTimer_onCompleteEvent;
+
+        timer.Initialise(OnCompleteEvent);
+
+        timeText.faceColor = startColour;
+        timeText.fontSize = startFont;
     }
 
     private void OnDisable()
@@ -50,14 +55,6 @@ public class StartTimer : MonoBehaviour
         Debug.Log("Completed timer event!");
 
         gameObject.SetActive(false);
-    }
-
-    void Start()
-    {
-        timer.Initialise(OnCompleteEvent);
-
-        timeText.faceColor = startColour;
-        timeText.fontSize = startFont;
     }
 
     public async void StartCountDown()
