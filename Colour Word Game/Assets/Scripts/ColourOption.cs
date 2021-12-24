@@ -7,6 +7,4 @@ using UnityEngine;
 public class ColourOption : MonoBehaviour
 {
     public ColourWordManager.Colours colour;
-
-    public ColourType colourType;
 }

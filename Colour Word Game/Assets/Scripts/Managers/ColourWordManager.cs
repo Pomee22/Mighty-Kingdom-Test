@@ -18,13 +18,13 @@ public class ColourWordManager : MonoBehaviour
         GREEN
     };
 
-    [SerializeField] private List<ColourType> colourTypes;
+    [SerializeField] private List<ColourAssets> colours;
 
     private int colourIndex;    // Used to randomly pick a colour
     private int wordIndex;  // Used to randomly pick a word
 
-    private ColourType currentColour;   // Used to keep track of the current/previous colour
-    private ColourType currentWord; // Used to keep track of the current/previous word 
+    private ColourAssets currentColour;   // Used to keep track of the current/previous colour
+    private ColourAssets currentWord; // Used to keep track of the current/previous word 
 
     void Awake()
     {
@@ -37,11 +37,11 @@ public class ColourWordManager : MonoBehaviour
     public void Initialise()
     {
         // First attempt to randomise the two indexes since they are at a default of 0
-        colourIndex = Random.Range(0, colourTypes.Count);
-        currentColour = colourTypes[colourIndex];
+        colourIndex = Random.Range(0, colours.Count);
+        currentColour = colours[colourIndex];
 
-        wordIndex = Random.Range(0, colourTypes.Count);
-        currentWord = colourTypes[wordIndex];
+        wordIndex = Random.Range(0, colours.Count);
+        currentWord = colours[wordIndex];
 
         SelectNewColourWord();
     }
@@ -62,43 +62,43 @@ public class ColourWordManager : MonoBehaviour
     private void Randomise()
     {
         // Record the previously used colour and word
-        ColourType previousWord = currentWord;
-        ColourType previousColour = currentColour;
+        ColourAssets previousWord = currentWord;
+        ColourAssets previousColour = currentColour;
 
         // Remove the used colour from the list
-        colourTypes.Remove(previousColour);
+        colours.Remove(previousColour);
 
         // Randomise a new colour with other colours that haven't been used 
-        colourIndex = Random.Range(0, colourTypes.Count);
-        currentColour = colourTypes[colourIndex];
+        colourIndex = Random.Range(0, colours.Count);
+        currentColour = colours[colourIndex];
 
         // Add the removed colour back
-        colourTypes.Add(previousColour);
+        colours.Add(previousColour);
 
         // Check if the new selected colour was the same as the previous word
         if (currentColour == previousWord)
         {
             // Just remove the colour from the list
-            colourTypes.Remove(currentColour);
+            colours.Remove(currentColour);
 
-            wordIndex = Random.Range(0, colourTypes.Count);
-            currentWord = colourTypes[wordIndex];
+            wordIndex = Random.Range(0, colours.Count);
+            currentWord = colours[wordIndex];
 
             // Add the colour back to the list
-            colourTypes.Add(currentColour);
+            colours.Add(currentColour);
         }
         else
         {
             // Just remove the colour and previous word from the list
-            colourTypes.Remove(currentColour);
-            colourTypes.Remove(previousWord);
+            colours.Remove(currentColour);
+            colours.Remove(previousWord);
 
-            wordIndex = Random.Range(0, colourTypes.Count);
-            currentWord = colourTypes[wordIndex];
+            wordIndex = Random.Range(0, colours.Count);
+            currentWord = colours[wordIndex];
 
             // Add the colour and previous word back to the list
-            colourTypes.Add(currentColour);
-            colourTypes.Add(previousWord);
+            colours.Add(currentColour);
+            colours.Add(previousWord);
         }
     }
 
@@ -110,7 +110,7 @@ public class ColourWordManager : MonoBehaviour
     /// <returns></returns>
     public bool CompareColours(ColourOption colour)
     {
-        if(colour.colour == this.currentColour.colourId)    
+        if(colour.colour == this.currentColour.colourType)    
         {
             Debug.Log("Bingo");
             return true;
@@ -122,3 +122,12 @@ public class ColourWordManager : MonoBehaviour
         }
     }
 }
+
+[System.Serializable]
+public class ColourAssets
+{
+    public ColourWordManager.Colours colourType;
+    public Color colour;
+    public string colourName;
+}
+
