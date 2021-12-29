@@ -170,7 +170,6 @@ public class GameManager : MonoBehaviour
         }
 
         return resultantTimeScore;
-
     }
 
     // Called by Unity onclick event.
