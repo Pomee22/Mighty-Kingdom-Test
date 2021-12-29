@@ -58,12 +58,12 @@ public class UIManager : MonoBehaviour
         startContent.SetActive(status);
     }
 
-    public void DisplayEndGame(int score, int timeTaken)
+    public void DisplayEndScreen(int score, int timeTaken)
     {
         scoreText.text = score.ToString();
         timeTakenText.text = timeTaken.ToString();
 
-        answersText.text = $"{GameManager.Instance.CorrectAnswerCounter} / {GameManager.Instance.rounds}";
+        answersText.text = $"{GameManager.Instance.CorrectAnswerCounter} / {GameManager.Instance.numberOfRounds}";
 
         endContent.SetActive(true);
         gameContent.SetActive(false);

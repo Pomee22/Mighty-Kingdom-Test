@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,18 +6,27 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public ColourWordManager colourWordManager;
-    public StartTimer startTimer;
+    public int CorrectAnswerCounter { get; set; }
 
-    [Tooltip("The number of rounds the game consists of.")]
-    public int rounds = 5;
-    public int roundDuration = 5;
-    private int currentRound = 0;
-
+    [Header("Class References")]
+    [Space]
+    [SerializeField] private ColourWordManager colourWordManager;
+    [SerializeField] private StartTimer startTimer;
     [SerializeField] private Timer gameTimer; 
 
+    [Header("Rounds")]
+    [Space]
+    [Tooltip("The number of rounds the game consists of.")]
+    public int numberOfRounds = 5;
+    private int currentRound = 0;
+
+    [Header("Scoring")]
+    [Space]
+    [Tooltip("The max time-based points awarded to the player per round.")]
+    [SerializeField] private int roundTimePoints = 5;
+    [Tooltip("The score awarded to the player per correct answer.")]
+    [SerializeField] private int points = 5;
     private int score = 0;
-    public int CorrectAnswerCounter { get; set; }
 
     public enum GameState
     {
@@ -38,9 +45,9 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Initialise the game state to start
         UpdateGameState(GameState.START);
     }
 
@@ -49,19 +56,44 @@ public class GameManager : MonoBehaviour
         // Change the current game state with a new state
         curretState = state;
 
-        // Run any events on game state change
+        // Update game on game state change
         switch(curretState)
         {
             case GameState.START:
                 SetUpStartScreen();
                 break;                
             case GameState.GAME:
-                SetUpGameLevel();
+                SetUpGameScreen();
                 break;
             case GameState.END:
-                EndGame();
+                SetUpEndScreen();
                 break;
         }
+    }
+
+    #region button_OnClick_Events
+    // Called by Unity onclick event.
+    // Gets invoked when player selects
+    // any one of the given colour options
+    public void ColourSelected(ColourOption colourOption)
+    {
+        // If the player selected the correct colour...
+        if (ColourWordManager.Instance.CompareColours(colourOption))
+        {
+            // Increment score
+            score += points;
+            CorrectAnswerCounter++;
+
+            // Play correct sound
+            SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKPOS);
+        }
+        else
+        {
+            // Play incorrect sound
+            SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKNEG);
+        }
+
+        NextRound();
     }
 
     /// <summary>
@@ -88,12 +120,14 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.GAME);
     }
 
+    #endregion
+
     private void SetUpStartScreen()
     {
         UIManager.Instance.StartMenu();
     }
 
-    public async void SetUpGameLevel()
+    public async void SetUpGameScreen()
     {
         // Reset game value
         currentRound = 0;
@@ -126,12 +160,11 @@ public class GameManager : MonoBehaviour
         // Randomise colour word 
         colourWordManager.Initialise();
 
-        // Set up timer and scene
-        //gameTimer.StartCountdown();
-        SetUpGameLevel();
+        // Set scene
+        SetUpGameScreen();
     }
 
-    private void EndGame()
+    private void SetUpEndScreen()
     {
         // Stop the game timer
         gameTimer.Stop();
@@ -144,7 +177,7 @@ public class GameManager : MonoBehaviour
         score += timeScore;
 
         // Update ui score
-        UIManager.Instance.DisplayEndGame(score, timeTaken);
+        UIManager.Instance.DisplayEndScreen(score, timeTaken);
     }
 
     /// <summary>
@@ -159,8 +192,8 @@ public class GameManager : MonoBehaviour
         int resultantTimeScore = 0;
 
         // Calculate the timeScore and split it according to the amount of rounds
-        int timeScore = ((int)roundDuration * rounds) - timeTaken;
-        timeScore /= rounds;
+        int timeScore = (roundTimePoints * numberOfRounds) - timeTaken;
+        timeScore /= numberOfRounds;
 
         // If the answer for the round was correct...
         for (int i = 0; i < CorrectAnswerCounter; i++)
@@ -172,45 +205,16 @@ public class GameManager : MonoBehaviour
         return resultantTimeScore;
     }
 
-    // Called by Unity onclick event.
-    // Gets invoked when player selects
-    // any one of the given colour options
-    public void ColourSelected(ColourOption colourOption)
-    {
-        // If the player selected the correct colour...
-        if (ColourWordManager.Instance.CompareColours(colourOption))
-        {
-            score++;
-            CorrectAnswerCounter++;
-
-            // Play correct sound
-            SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKPOS);
-        }
-        else
-        {
-            // Play incorrect sound
-            SoundManager.Instance.Play(SoundManager.Sound.BUTTONCLICKNEG);
-        }
-
-        NextRound();
-    }
-
-    public void NextRound()
+    private void NextRound()
     {
         currentRound++;
 
         // If this was the last round...
-        if (currentRound == rounds)
+        if (currentRound == numberOfRounds)
             UpdateGameState(GameState.END);
         else
         {
             colourWordManager.SelectNewColourWord();
         }
-    }
-
-    private void OnLevelComplete()
-    {
-        // Play a sequisential animation
-
     }
 }
