@@ -2823,10 +2823,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2102994924}
   sounds:
-  - sfxType: 0
-    sfx: {fileID: 8300000, guid: 5161ad036b8bfa1429f509faf7da2323, type: 3}
   - sfxType: 1
     sfx: {fileID: 8300000, guid: 839ad369621926e4586d99eeedb73a24, type: 3}
+  - sfxType: 0
+    sfx: {fileID: 8300000, guid: 5161ad036b8bfa1429f509faf7da2323, type: 3}
   - sfxType: 2
     sfx: {fileID: 8300000, guid: 785d1e9a87935d0419f8a479022b850c, type: 3}
   - sfxType: 3

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -11,6 +12,8 @@ public class SoundManager : MonoBehaviour
     [Header("SFX")]
     [Space]
     public SoundAssets[] sounds;
+
+    private Dictionary<Sound, AudioClip> soundClips;
 
     public enum Sound
     {
@@ -29,9 +32,20 @@ public class SoundManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        soundClips = new Dictionary<Sound, AudioClip>();
+
+        // Fill the dictionary with the array 
+        for(int i = 0; i < sounds.Length; i++)
+        {
+            soundClips.Add(sounds[i].sfxType, sounds[i].sfx);
+        }
+    }
+
     public void Play(Sound soundType)
     {
-        audioSource.PlayOneShot(sounds[(int)soundType].sfx);
+        audioSource.PlayOneShot(soundClips[soundType]);
     }
 }
 
