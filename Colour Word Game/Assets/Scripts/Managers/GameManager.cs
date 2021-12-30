@@ -123,6 +123,15 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.GAME);
     }
 
+    /// <summary>
+    /// Button onclick event.
+    /// Quits the application.
+    /// </summary>
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     #endregion
 
     private void SetUpStartScreen()

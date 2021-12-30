@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     {
         // Update score texts
         scoreText.text = score.ToString();
-        timeTakenText.text = timeTaken.ToString();
+        timeTakenText.text = $"{timeTaken} secs";
         answersText.text = $"{GameManager.Instance.CorrectAnswerCounter} / {GameManager.Instance.numberOfRounds}";
 
         endContent.SetActive(true);
