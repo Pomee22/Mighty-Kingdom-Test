@@ -18,6 +18,8 @@ public class ColourWordManager : MonoBehaviour
         GREEN
     };
 
+    [Header("Colour Words")]
+    [Space]
     [SerializeField] private List<ColourAssets> colourAssets;
 
     private int colourIndex;    // Used to randomly pick a colour

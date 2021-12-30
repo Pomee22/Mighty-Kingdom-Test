@@ -1,9 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The SoundManager contains all sound
+/// files and plays the specified sound
+/// </summary>
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
+    public enum Sound
+    {
+        BUTTONCLICK,
+        BUTTONCLICKPOS,
+        BUTTONCLICKNEG,
+        COUNTDOWN,
+        LASTCOUNTDOWN
+    }
 
     [Header("Source")]
     [Space]
@@ -14,15 +26,6 @@ public class SoundManager : MonoBehaviour
     public SoundAssets[] sounds;
 
     private Dictionary<Sound, AudioClip> soundClips;
-
-    public enum Sound
-    {
-        BUTTONCLICK,
-        BUTTONCLICKPOS,
-        BUTTONCLICKNEG,
-        COUNTDOWN,
-        LASTCOUNTDOWN
-    }
 
     private void Awake()
     {
@@ -50,8 +53,8 @@ public class SoundManager : MonoBehaviour
 }
 
 /// <summary>
-/// Used as a container to hold
-/// the sfx and the sound type
+/// A class that acts a container by
+/// exposing the members in the inspector.
 /// </summary>
 [System.Serializable]
 public class SoundAssets 
