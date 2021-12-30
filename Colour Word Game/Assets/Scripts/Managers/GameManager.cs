@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
         GAME,
         END
     };
-
     private GameState curretState;
 
     private void Awake()
@@ -153,15 +152,6 @@ public class GameManager : MonoBehaviour
         // Commence countdown
         startTimer.StartCountDown();
         await Task.Delay(startTimer.time * 1000);
-    }
-
-    private void StartGameLevel()
-    {
-        // Randomise colour word 
-        colourWordManager.Initialise();
-
-        // Set scene
-        SetUpGameScreen();
     }
 
     private void SetUpEndScreen()

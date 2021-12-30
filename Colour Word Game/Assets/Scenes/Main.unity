@@ -1275,9 +1275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colourWordManager: {fileID: 418216068}
   startTimer: {fileID: 836707528}
-  rounds: 10
-  roundDuration: 5
   gameTimer: {fileID: 519818737}
+  numberOfRounds: 5
+  roundTimePoints: 5
+  points: 5
 --- !u!114 &519818737
 MonoBehaviour:
   m_ObjectHideFlags: 0
