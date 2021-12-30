@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
 
         // Commence countdown
         startTimer.StartCountDown();
-        await Task.Delay(startTimer.time * 1000);
+        await Task.Delay(startTimer.duration * 1000);
     }
 
     private void SetUpEndScreen()

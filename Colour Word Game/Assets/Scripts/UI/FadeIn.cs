@@ -8,15 +8,21 @@ using System.Threading.Tasks;
 /// </summary>
 public class FadeIn : MonoBehaviour
 {
+    [Header("Texts")]
+    [Space]
     [SerializeField] private TextMeshProUGUI[] texts;
 
+    [Header("Time")]
+    [Space]
     [SerializeField] private float delay = 0.0f;
-
-    [SerializeField] private Color32 endColour;
-    [SerializeField] private Color32 startColour;
     [SerializeField] private float duration = 5.0f;
 
-    private Task[] tasks;
+    [Header("Colour")]
+    [Space]
+    [SerializeField] private Color32 endColour;
+    [SerializeField] private Color32 startColour;
+
+    private Task[] tasks;   // Used to delay the fade of each text
 
     private void OnEnable()
     {

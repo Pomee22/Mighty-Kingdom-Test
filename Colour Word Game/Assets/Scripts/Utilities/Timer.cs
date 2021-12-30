@@ -3,15 +3,20 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// General counting timer that counts up.
+/// General timer class that 
+/// can perform either a countdown or countup
 /// </summary>
 public class Timer : MonoBehaviour
 {
-    public event Action onCompleteEvent;
+    public event Action onCompleteEvent;    
 
     private float timer = 0.0f;
     private bool isCountingDown;
 
+    /// <summary>
+    /// Assigns a delegate to the variable.
+    /// </summary>
+    /// <param name="actionEvent"></param>
     public void Initialise(Action actionEvent)
     {
         onCompleteEvent = actionEvent;
@@ -19,13 +24,11 @@ public class Timer : MonoBehaviour
 
     public void StartCountUp()
     {
-        Debug.Log("starting timer");
         // Set the duration
         timer = 0.0f;
 
         isCountingDown = true;
 
-        //await CountdownAsync();
         StartCoroutine(CountUpActive());
     }
 
@@ -41,6 +44,7 @@ public class Timer : MonoBehaviour
     {
         isCountingDown = false;
 
+        // Stops all timer/s
         StopAllCoroutines();
     }
 
@@ -51,33 +55,29 @@ public class Timer : MonoBehaviour
 
     private IEnumerator CountUpActive()
     {
-        // Decrease the time if we still have time left
+        // Counts up the timer until it is stopped
         while (isCountingDown)
         {
             timer += Time.deltaTime;
 
-            // Display time in seconds
-            int time = (int)timer;
-
             yield return null;
         }
 
+        // Play the delegate if it has been assigned
         onCompleteEvent?.Invoke();
-
-        // Play on-complete event
     }
 
     private IEnumerator CountDownActive()
     {
-        while(timer > 0.0f)
+        // Decrease the time if we still have time left
+        while (timer > 0.0f)
         {
             timer -= Time.deltaTime;
 
             yield return null;
         }
 
-        Debug.Log("Passed null");
-
+        // Play the delegate if it has been assigned
         onCompleteEvent?.Invoke();
     }
 }
