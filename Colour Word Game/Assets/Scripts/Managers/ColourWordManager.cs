@@ -55,8 +55,8 @@ public class ColourWordManager : MonoBehaviour
         // Ensures a differnt colour word is selcted
         Randomise();
 
-        UIManager.Instance.colourWord.color = currentColour.colour;
-        UIManager.Instance.colourWord.text = currentWord.colourName;
+        // Update colour word text
+        UIManager.Instance.DisplayColourWord(currentColour, currentWord);
     }
 
     private void Randomise()

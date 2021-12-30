@@ -2,6 +2,10 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// The GameManager controls the state of
+/// the game.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -123,7 +127,7 @@ public class GameManager : MonoBehaviour
 
     private void SetUpStartScreen()
     {
-        UIManager.Instance.StartMenu();
+        UIManager.Instance.DisplayStartScreen();
     }
 
     public async void SetUpGameScreen()
@@ -138,7 +142,7 @@ public class GameManager : MonoBehaviour
         colourWordManager.Initialise();
 
         // Wait for the rransition into the game scene
-        UIManager.Instance.StartGame();
+        UIManager.Instance.DisplayGameScreen();
 
         // Begin the timer after waiting 
         gameTimer.StartCountUp();

@@ -1,30 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// The UIManager manages the ui in the game
+/// by updating, enabling and disabling them
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject menuScreen;
-    public GameObject gamemodeScreen;
+    [Header("State Panels")]
+    [Space]
+    [SerializeField] private GameObject startContent;
+    [SerializeField] private GameObject gameContent;
+    [SerializeField] private GameObject endContent;
 
-    public GameObject startContent;
-    public GameObject gameContent;
-    public GameObject endContent;
-
-    public TextMeshProUGUI timeTakenText;
-
-    public TextMeshProUGUI colourWord;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI answersText;
-
-    public TextMeshProUGUI descriptionText;
-
-    public Timer startTimer;
-    public TextMeshProUGUI startTimerText;
+    [Header("Scoring Text")]
+    [Space]
+    [SerializeField] private TextMeshProUGUI timeTakenText;
+    [SerializeField] private TextMeshProUGUI colourWord;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI answersText;
 
     private void Awake()
     {
@@ -34,7 +30,11 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    public void StartMenu()
+    /// <summary>
+    /// Invoked by the GameManager.
+    /// Enables the start screen
+    /// </summary>
+    public void DisplayStartScreen()
     {
         endContent.SetActive(false);
 
@@ -42,30 +42,40 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Button onclick event.
-    /// Starts the game.
+    /// Invoked by the GameManager.
+    /// Enables the game screen
     /// </summary>
-    public void StartGame()
+    public void DisplayGameScreen()
     {
-        //startTimer.StartCountDown()
         startContent.SetActive(false);
 
         gameContent.SetActive(true);
     }
 
-    public void UpdateStartContent(bool status)
-    {
-        startContent.SetActive(status);
-    }
-
+    /// <summary>
+    /// Invoked by the GameManager.
+    /// Enables the end screen
+    /// </summary>
     public void DisplayEndScreen(int score, int timeTaken)
     {
+        // Update score texts
         scoreText.text = score.ToString();
         timeTakenText.text = timeTaken.ToString();
-
         answersText.text = $"{GameManager.Instance.CorrectAnswerCounter} / {GameManager.Instance.numberOfRounds}";
 
         endContent.SetActive(true);
         gameContent.SetActive(false);
+    }
+
+    /// <summary>
+    /// Invoked by the ColourWordManager.
+    /// Updates the colour word text.
+    /// </summary>
+    /// <param name="visualColour"></param>
+    /// <param name="colourText"></param>
+    public void DisplayColourWord(ColourAssets visualColour, ColourAssets colourText)
+    {
+        colourWord.color = visualColour.colour;
+        colourWord.text = colourText.colourName;
     }
 }
