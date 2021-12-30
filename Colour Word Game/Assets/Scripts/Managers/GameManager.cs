@@ -12,6 +12,14 @@ public class GameManager : MonoBehaviour
 
     public int CorrectAnswerCounter { get; set; }
 
+    public enum GameState
+    {
+        START,
+        GAME,
+        END
+    };
+    private GameState curretState;
+
     [Header("Class References")]
     [Space]
     [SerializeField] private ColourWordManager colourWordManager;
@@ -31,14 +39,6 @@ public class GameManager : MonoBehaviour
     [Tooltip("The score awarded to the player per correct answer.")]
     [SerializeField] private int points = 5;
     private int score = 0;
-
-    public enum GameState
-    {
-        START,
-        GAME,
-        END
-    };
-    private GameState curretState;
 
     private void Awake()
     {

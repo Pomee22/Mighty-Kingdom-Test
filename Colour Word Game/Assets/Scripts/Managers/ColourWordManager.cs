@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Manages the color words by 
-/// randomly selecting a colour and word 
+/// The ColourWordManager manages the color words by 
+/// randomising a new colour word and 
+/// comparing the correct answer
 /// </summary>
 public class ColourWordManager : MonoBehaviour
 {
@@ -18,11 +18,10 @@ public class ColourWordManager : MonoBehaviour
         GREEN
     };
 
-    [SerializeField] private List<ColourAssets> colours;
+    [SerializeField] private List<ColourAssets> colourAssets;
 
     private int colourIndex;    // Used to randomly pick a colour
     private int wordIndex;  // Used to randomly pick a word
-
     private ColourAssets currentColour;   // Used to keep track of the current/previous colour
     private ColourAssets currentWord; // Used to keep track of the current/previous word 
 
@@ -37,11 +36,11 @@ public class ColourWordManager : MonoBehaviour
     public void Initialise()
     {
         // First attempt to randomise the two indexes since they are at a default of 0
-        colourIndex = Random.Range(0, colours.Count);
-        currentColour = colours[colourIndex];
+        colourIndex = Random.Range(0, colourAssets.Count);
+        currentColour = colourAssets[colourIndex];
 
-        wordIndex = Random.Range(0, colours.Count);
-        currentWord = colours[wordIndex];
+        wordIndex = Random.Range(0, colourAssets.Count);
+        currentWord = colourAssets[wordIndex];
 
         SelectNewColourWord();
     }
@@ -52,7 +51,7 @@ public class ColourWordManager : MonoBehaviour
     /// </summary>
     public void SelectNewColourWord()
     {        
-        // Ensures a differnt colour word is selcted
+        // Ensures a differnt colour word is selected
         Randomise();
 
         // Update colour word text
@@ -66,39 +65,39 @@ public class ColourWordManager : MonoBehaviour
         ColourAssets previousColour = currentColour;
 
         // Remove the used colour from the list
-        colours.Remove(previousColour);
+        colourAssets.Remove(previousColour);
 
         // Randomise a new colour with other colours that haven't been used 
-        colourIndex = Random.Range(0, colours.Count);
-        currentColour = colours[colourIndex];
+        colourIndex = Random.Range(0, colourAssets.Count);
+        currentColour = colourAssets[colourIndex];
 
         // Add the removed colour back
-        colours.Add(previousColour);
+        colourAssets.Add(previousColour);
 
         // Check if the new selected colour was the same as the previous word
         if (currentColour == previousWord)
         {
             // Just remove the colour from the list
-            colours.Remove(currentColour);
+            colourAssets.Remove(currentColour);
 
-            wordIndex = Random.Range(0, colours.Count);
-            currentWord = colours[wordIndex];
+            wordIndex = Random.Range(0, colourAssets.Count);
+            currentWord = colourAssets[wordIndex];
 
             // Add the colour back to the list
-            colours.Add(currentColour);
+            colourAssets.Add(currentColour);
         }
         else
         {
             // Just remove the colour and previous word from the list
-            colours.Remove(currentColour);
-            colours.Remove(previousWord);
+            colourAssets.Remove(currentColour);
+            colourAssets.Remove(previousWord);
 
-            wordIndex = Random.Range(0, colours.Count);
-            currentWord = colours[wordIndex];
+            wordIndex = Random.Range(0, colourAssets.Count);
+            currentWord = colourAssets[wordIndex];
 
             // Add the colour and previous word back to the list
-            colours.Add(currentColour);
-            colours.Add(previousWord);
+            colourAssets.Add(currentColour);
+            colourAssets.Add(previousWord);
         }
     }
 
@@ -123,6 +122,10 @@ public class ColourWordManager : MonoBehaviour
     }
 }
 
+/// <summary>
+/// A class that acts a container by
+/// exposing the members in the inspector.
+/// </summary>
 [System.Serializable]
 public class ColourAssets
 {
@@ -130,4 +133,3 @@ public class ColourAssets
     public Color colour;
     public string colourName;
 }
-
