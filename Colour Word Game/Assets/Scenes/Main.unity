@@ -1272,8 +1272,8 @@ MonoBehaviour:
   startTimer: {fileID: 836707528}
   gameTimer: {fileID: 519818737}
   numberOfRounds: 15
-  roundTimePoints: 100
-  points: 100
+  roundTimePoints: 10
+  points: 10
 --- !u!114 &519818737
 MonoBehaviour:
   m_ObjectHideFlags: 0
