@@ -1272,8 +1272,8 @@ MonoBehaviour:
   startTimer: {fileID: 836707528}
   gameTimer: {fileID: 519818737}
   numberOfRounds: 15
-  roundTimePoints: 5
-  points: 5
+  roundTimePoints: 100
+  points: 100
 --- !u!114 &519818737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,7 +1939,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 0, y: -980}
+  m_SizeDelta: {x: 0, y: -1118.1907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &780502569
 MonoBehaviour:
